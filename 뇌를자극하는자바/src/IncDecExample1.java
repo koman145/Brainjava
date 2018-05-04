@@ -13,14 +13,15 @@ public class IncDecExample1 {
 
 	public static void main(String[] args) {
 		int num1 = 0, num2 = 0, num3 = 0, num4 = 0;
-		int result1 = num1++;			//++ ¿¬»êÀÇ °á°ú´Â num1ÀÇ ±âÁ¸°ª
-		int result2 = num2--;			//-- ¿¬»êÀÇ °á°ú´Â num2ÀÇ ±âÁ¸°ª
-		int result3 = ++num3;			//++ ¿¬»êÀÇ °á°ú´Â num3ÀÇ »õ·Î¿î°ª
-		int result4 = --num4;			//-- ¿¬»êÀÇ °á°ú´Â num4ÀÇ »õ·Î¿î°ª
+		int result1 = num1++;			//++ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ num1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int result2 = num2--;			//-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ num2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		int result3 = ++num3;			//++ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ num3ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿î°ª
+		int result4 = --num4;			//-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ num4ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿î°ª
 		System.out.println("result1 = " + result1);
 		System.out.println("result2 = " + result2);
 		System.out.println("result3 = " + result3);
 		System.out.println("result4 = " + result4);
+		
 		
 	}
 
