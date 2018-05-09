@@ -3,6 +3,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 
 class Person {
 	
@@ -48,62 +50,13 @@ class Person {
 	
 }
 
-public class JDBC_Person {
+public class JDBC_Person_ArrayList {
     public static void main(String args[]) {
+    	    	
+    	ArrayList<Person> listPerson = new ArrayList<Person>(3);
     	
     	
-    	Person[] persons = new Person[];	// 배열객체 (Person 테이블에 cardinality가 3개)
-    	
-    	
-    	
-    	for(int i=0; i<persons.length; i++) {
-    		persons[i] = new Person();	// 생성자 persons.length 길이만큼 호출하여 
-    									// 배열래퍼런스에 대입
-    	}
-    	
-    	
-    	
-    	/*
-    	for(int i=0; i<persons.length; i++) {
-    		System.out.println("주민번호" + persons[i].getJumincd() );
-    		System.out.println("이름" + persons[i].getPName() );
-    		System.out.println("성별" + persons[i].getGender() );
-    		System.out.println("나이" + persons[i].getAge() );
-    	}
-    	*/	
-    	
-    	
-    	
-    	
-//    	Person person;			//래퍼런스 변수 선언
-//    	person = new Person();	//객체생성 - new 연산자(생성자) 이용 ( new 뒤에는 클래스가 온다)
-    	// 한줄로 하면  Person person = new Person();
-    	
-    	
-    	/*
-    	// person 객체에 멤버필드를 셋팅
-    	person.setJumincd("800511-1574310");
-    	person.setPName("홍길동");
-    	person.setGender("남자");
-    	person.setAge(20);
-
-    	int age = person.getAge();
-    	System.out.println(age);
-    	
-    	
-    	System.out.println(person.getAge());
-    	*/
-    	
-    	
-    	/*
-    	System.out.println(person.Jumincd);
-    	System.out.println(person.PName);
-    	System.out.println(person.gender);
-    	System.out.println(person.age);
-    	*/
-    	
-    	
-    	  
+   	    	  
     	  //=============================== JDBC 연결문 시작 ================================
           //1단계 :DB 연결을 위한 커넥션 인터페이스
            Connection conn = null;
@@ -137,44 +90,36 @@ public class JDBC_Person {
                rs=stmt.executeQuery("SELECT Jumincd, PName, gender, age FROM Person");
                
                System.out.println("   주민번호     이름  성별  나이");
-               
-               int i = 0;
-               
+                    
                while(rs.next()) {
+            	   //Person person;
+            	   Person person = new Person();
             	   
-            	   persons[i].setJumincd(rs.getString(1));
-            	   persons[i].setPName(rs.getString(2));
-            	   persons[i].setGender(rs.getString(3));
-            	   persons[i].setAge(rs.getInt(4));   	   
+            	   person.setJumincd(rs.getString(1)); //rs.getString(1)은 DB에서 테이블의 속성을 입력받기 위한것
+            	   person.setPName(rs.getString(2));
+            	   person.setGender(rs.getString(3));
+            	   person.setAge(rs.getInt(4));
             	   
-            	   i++;
-            	   
-               /*
-               Jumincd	 = rs.getString(1);	//rs.getString("Jumincd");
-               PName	 = rs.getString(2);	//rs.getString("PName");
-               gender	 = rs.getString(3);	//rs.getString("gender");
-               age		 = rs.getInt(4);	//rs.getInt("age");
-               */
-            	   
-               //System.out.println(Jumincd + "--" + PName + "--" + gender + "-----" + age);
+            	   listPerson.add(person);
+            	  
                }
                
                
                
                //4단계: DB연결을 종료한다
                conn.close();
-               
                System.out.println("--------------------------------------");
                
-               //System.out.println(Jumincd + "--" + PName + "--" + gender + "-----" + age);
-               for(i=0; i<persons.length; i++) {
+               for(int i = 0; i < listPerson.size(); i++) {
+            	   System.out.print(listPerson.get(i).getJumincd() + "  ");
+            	   System.out.print(listPerson.get(i).getPName() + "  ");
+            	   System.out.print(listPerson.get(i).getGender() + "    ");
+            	   System.out.print(listPerson.get(i).getAge() + " ");
+            	   System.out.println(" ");
             	   
-           		System.out.println("주민번호" 	+ persons[i].getJumincd() );
-           		System.out.println("이름" 		+ persons[i].getPName() );
-           		System.out.println("성별" 		+ persons[i].getGender() );
-           		System.out.println("나이" 		+ persons[i].getAge() );
-           		System.out.println("--------------------------------------");
-           	}
+               }
+
+              
            }
            catch (ClassNotFoundException cnfe) {
                System.out.println("해당 클래스를 찾을 수 없습니다." + 
