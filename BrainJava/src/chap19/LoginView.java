@@ -180,18 +180,25 @@ public class LoginView extends JFrame {
 				id = rs.getString(1);
 				pw = rs.getString(2);
 
-				if (userText.getText().equals(id) && new String(passText.getPassword()).equals(pw)) {
-					JOptionPane.showMessageDialog(null, "Success");
-					bLoginCheck = true;
+				if (userText.getText().equals(id)) {
+					if (new String(passText.getPassword()).equals(pw)) {
+						JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+						bLoginCheck = true;
 
-					// 로그인 성공이라면 MainProcess 클래스의 showFrameTest 메소드 실행
-					if (isLogin()) {
-						main.showFrameTest(); // 메인창 메소드를 이용해 창띄우기
+					} else {
+						JOptionPane.showMessageDialog(null, "비밀번호가 다릅니다.");
 					}
+
 				}
 			}
+
+			// 로그인 성공이라면 MainProcess 클래스의 showFrameTest 메소드 실행
+			if (isLogin()) {
+				main.showFrameTest(); // 메인창 메소드를 이용해 창띄우기
+			}
+
 			if (bLoginCheck != true) { // 모든 아이디, 비밀번호 값이 일치하지 않는다면 Faild 창 띄우기
-				JOptionPane.showMessageDialog(null, "Faild");
+				JOptionPane.showMessageDialog(null, "로그인 실패");
 			}
 
 			// 4단계: DB연결을 종료한다
