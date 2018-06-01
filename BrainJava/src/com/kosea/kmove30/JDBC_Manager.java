@@ -33,6 +33,7 @@ public class JDBC_Manager {
 		return conn;
 	}
 
+	// 조회
 	// query - "SELECT PName, age, gender FROM Person"
 	public ResultSet SelectTable(String query) throws Exception {
 		stmt = conn.createStatement();
@@ -44,12 +45,13 @@ public class JDBC_Manager {
 	// INSERT INTO Person(PName, gender, age) values('을지문덕' , 'M' , 32);
 	public void insertTable(String[] arr) throws Exception {
 		String name = arr[0];
-		String age 	= arr[1];
+		String age = arr[1];
 		String gender = arr[2];
-		
+
+		gender = gender.equals("남") ? "m" : "f";
+
 		String query = "INSERT INTO person(PName, age, gender) values('" + name + "','" + age + "','" + gender + "')";
-		// String sql = "INSERT INTO Person (Jumincd, PName, gender, age)
-		// values('8704112011523' , '을지문덕' , 'M' , 32)";
+		System.out.println("query = " + query);
 		stmt = conn.createStatement();
 		int insertCount = stmt.executeUpdate(query);
 
@@ -57,22 +59,41 @@ public class JDBC_Manager {
 			System.out.println(insertCount + "건이 추가 되었습니다.");
 	}
 
+	// 회원 아이디, 비밀번호 추가
+	public void addIdPw(String[] ary) throws Exception {
+		String id = ary[0];
+		String pw = ary[1];
+
+		String query = "INSERT INTO member(id, pw) values('" + id + "','" + pw + "')";
+		System.out.println("query = " + query);
+		stmt = conn.createStatement();
+		int idCount = stmt.executeUpdate(query);
+
+		if (idCount > 0)
+			System.out.println(idCount + " 건의 회원 정보가 추가되었습니다.");
+	}
+
+	// 수정
+	// query - update person set age = 52 where PName ='이영천';
+	public void updateTable(String name, String age) throws Exception {
+		String query = "update person set age = " + age + " where PName ='" + name + "'";
+		System.out.println("query = " + query);
+		stmt = conn.createStatement();
+		int updateCount = stmt.executeUpdate(query);
+
+		if (updateCount > 0)
+			System.out.println(updateCount + "건이 수정 되었습니다.");
+	}
+
 	// 삭제
 	// deleteName = "delete from person where PName = "홍길동";
 	public void deleteTable(String deleteName) throws Exception {
 		String query = "delete from person where PName = '" + deleteName + "'";
-		// String sql = "delete from Person where PName = '" + args[0] + "'";
 		stmt = conn.createStatement();
 		int deleteCount = stmt.executeUpdate(query);
 
 		if (deleteCount > 0)
 			System.out.println(deleteCount + "건이 삭제 되었습니다.");
-
-		/*
-		 * // DB SQL 작업 stmt = conn.createStatement(); String sql =
-		 * "delete from Person where PName = '" + args[0] + "'"; //delete from Person
-		 * where PName = '홍길동'; int changerecord = stmt.executeUpdate(sql);
-		 */
 
 	}
 
