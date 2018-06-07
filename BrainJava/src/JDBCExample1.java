@@ -11,7 +11,7 @@ class JDBCExample1 {
             Class.forName("com.mysql.jdbc.Driver");
             // 3단계: 드라이버매니져 클래스는 getConnection메소드로 DB를 연결한다.
             conn = DriverManager.getConnection(
-               "jdbc:mysql://localhost:3306/mysql", "root", "12345");
+               "jdbc:mysql://localhost:3306/mysql?characterEncoding=utf8", "root", "12345");
             System.out.println("데이터베이스에 접속했습니다.");
             
             // 4단계: DB연결을 종료한다.

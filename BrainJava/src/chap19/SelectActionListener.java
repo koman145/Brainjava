@@ -64,7 +64,7 @@ public class SelectActionListener implements ActionListener {
 			} // 조회된결과가 0일때
 			else {
 				System.out.println("조회된 결과가 없습니다.");
-				JOptionPane.showMessageDialog(null, "조회된 결과가 나이", "오류 메시지", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "조회된 결과가 없습니다.", "오류 메시지", JOptionPane.ERROR_MESSAGE);
 
 			}
 

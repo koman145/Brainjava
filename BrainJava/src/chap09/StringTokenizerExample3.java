@@ -14,7 +14,5 @@ public class StringTokenizerExample3 {
 			else
 				System.out.println(token);
 		}
-	
-		
 	}
 }

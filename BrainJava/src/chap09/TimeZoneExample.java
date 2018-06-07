@@ -1,6 +1,5 @@
 /**
  * 	2018. 5. 14.  Dev Kim.J.H
-
  */
 package chap09;
 
@@ -15,7 +14,7 @@ public class TimeZoneExample {
 		for (String id : ids) {
 			System.out.println(displayTimeZone(TimeZone.getTimeZone(id)));
 		}
-		
+
 		System.out.println("\nTotal TimeZone ID " + ids.length);
 
 	}
@@ -23,8 +22,7 @@ public class TimeZoneExample {
 	private static String displayTimeZone(TimeZone tz) {
 
 		long hours = TimeUnit.MILLISECONDS.toHours(tz.getRawOffset());
-		long minutes = TimeUnit.MILLISECONDS.toMinutes(tz.getRawOffset()) 
-                                  - TimeUnit.HOURS.toMinutes(hours);
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(tz.getRawOffset()) - TimeUnit.HOURS.toMinutes(hours);
 		// avoid -4:-30 issue
 		minutes = Math.abs(minutes);
 

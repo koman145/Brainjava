@@ -64,7 +64,7 @@ public class JDBC_Manager {
 		String id = ary[0];
 		String pw = ary[1];
 
-		String query = "INSERT INTO member(id, pw) values('" + id + "','" + pw + "')";
+		String query = "INSERT INTO Tetris(id, pw) values('" + id + "','" + pw + "')";
 		System.out.println("query = " + query);
 		stmt = conn.createStatement();
 		int idCount = stmt.executeUpdate(query);

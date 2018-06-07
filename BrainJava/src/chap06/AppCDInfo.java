@@ -2,6 +2,7 @@ package chap06;
 
 public class AppCDInfo extends CDInfo implements Lendable {
 
+	private static final byte STATE_NOORMAL = 0;
 	String borrower;
 	String checkOutDate;
 	byte state;
@@ -27,7 +28,7 @@ public class AppCDInfo extends CDInfo implements Lendable {
 	public void checkIn() {
 		this.borrower = null;
 		this.checkOutDate = null;
-		this.state = STATE_NORMAL;
+		this.state = STATE_NOORMAL;
 //		this.state = 0;
 		System.out.println("*" + title + "CD가 반납되었습니다." + "\n");
 

@@ -75,7 +75,7 @@ public class WindowExample8_2 extends JFrame {
 		System.out.println("프로그램 시작");
 
 		try {
-			jdbcManager.DBConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mysql", "root", "12345");
+			jdbcManager.DBConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mysql?characterEncoding=utf8", "root", "12345");
 			System.out.println("데이터베이스에 연결되었습니다.");
 			frame.setTitle("참가자 명단 프로그램 - DB접속성공");
 		} catch (ClassNotFoundException cnfe) {

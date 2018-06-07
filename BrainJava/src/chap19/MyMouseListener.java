@@ -67,7 +67,7 @@ public class MyMouseListener extends MouseAdapter {
 				 * genderCombox.getSelectedItem();
 				 * 
 				 * System.out.println("selectedIndex : " + selectedIndex);
-				 * System.out.println("item : " + item.toString());
+				 * System.out.println("item : " + nitem.toString());
 				 */
 
 				// text3.setText(table.getValueAt(row, 2).toString());

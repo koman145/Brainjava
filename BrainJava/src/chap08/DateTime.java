@@ -1,6 +1,5 @@
 /**
  * 	2018. 5. 11.  Dev Kim.J.H
-
  */
 package chap08;
 
@@ -18,7 +17,6 @@ public class DateTime {
 		int year = gregorianCalendar.get(Calendar.YEAR);
 		int month = gregorianCalendar.get(Calendar.MONTH) + 1;
 		int day = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
-		System.out.printf("오늘은 %d년 %d월 %d일입니다. %n" , year, month, day);
+		System.out.printf("오늘은 %d년 %d월 %d일입니다. %n", year, month, day);
 	}
-
 }

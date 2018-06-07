@@ -23,7 +23,7 @@ class JDBC_Insert {
             
             // DB SQL 작업
             stmt = conn.createStatement();
-            String sql = "INSERT INTO Person (Jumincd, PName, gender, age) values('8704112011523'	,	'을지문덕'	,	'M'	,	32)";
+            String sql = "INSERT INTO tetrispoint values('koman145'	, 40)";
             int changerecord = stmt.executeUpdate(sql);
            
             

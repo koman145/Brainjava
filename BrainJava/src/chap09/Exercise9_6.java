@@ -1,6 +1,5 @@
 /**
  * 	2018. 5. 15.  Dev Kim.J.H
-
  */
 package chap09;
 
@@ -26,5 +25,3 @@ public class Exercise9_6 {
 		System.out.println("뒷면 : " + b);
 	}
 }
-
-

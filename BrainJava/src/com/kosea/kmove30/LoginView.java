@@ -1,4 +1,4 @@
-package chap19;
+package com.kosea.kmove30;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -35,6 +35,9 @@ public class LoginView extends JFrame {
 	private static JPasswordField passText;
 	private static JTextField userText;
 	private static boolean bLoginCheck;
+	private DbLogIn dblogin;
+	public static String id = null;
+	public static String pw = null;
 
 	public static void main(String[] args) {
 
@@ -91,57 +94,11 @@ public class LoginView extends JFrame {
 		btnInit.setBounds(10, 80, 100, 25);
 		panel.add(btnInit);
 		btnInit.addActionListener(new ActionListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// DB관리(회원추가 클래스)
-				JDBC_Manager jdbcManager = new JDBC_Manager();
-				JFrame frame = new JFrame("회원가입");
-				frame.setPreferredSize(new Dimension(550, 200));
-				frame.setLocation(500, 400);
-				Container contentPane = frame.getContentPane();
+			public void actionPerformed(ActionEvent arg0) {
+				MemberProc memberproc = new MemberProc();
 
-				String colNames[] = { "아이디", "비밀번호" };
-
-				DefaultTableModel model = new DefaultTableModel(colNames, 0);
-				JTable table = new JTable(model);
-				contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
-				JPanel panel = new JPanel();
-
-				JTextField text1 = new JTextField(10);
-				JTextField text2 = new JTextField(10);
-
-				JButton addBtn = new JButton("회원가입");
-
-				panel.add(new JLabel("아이디"));
-				panel.add(text1);
-				panel.add(new JLabel("비밀번호"));
-				panel.add(text2);
-
-				panel.add(addBtn);
-
-				contentPane.add(panel, BorderLayout.SOUTH);
-
-				addBtn.addActionListener(new AddLogIn(table, text1, text2, jdbcManager));
-				// 버튼을 누르면 member 테이블에 아이디와 비밀번호 값 추가
-
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.pack();
-				frame.setVisible(true);
-
-				System.out.println("프로그램 시작");
-
-				try {
-					jdbcManager.DBConnection("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/mysql", "root",
-							"12345");
-					System.out.println("데이터베이스에 연결되었습니다.");
-					frame.setTitle("회원등록");
-				} catch (ClassNotFoundException cnfe) {
-					System.out.println("해당 클래스를 찾을 수 없습니다.");
-					System.out.println(cnfe.getMessage());
-				} catch (Exception ex) {
-					System.out.println(ex.getMessage());
-					frame.setTitle("접속실패");
-				}
 			}
 		});
 
@@ -165,20 +122,21 @@ public class LoginView extends JFrame {
 		ResultSet rs = null;
 		try {
 
-			String id = null;
-			String pw = null;
+			// String id = null;
+			// String pw = null;
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "12345");
 			System.out.println("데이터베이스에 접속했습니다.");
 
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT id, pw FROM member");
+			rs = stmt.executeQuery("SELECT id, pwd FROM Tetrismember");
 
 			while (rs.next()) {
 
 				id = rs.getString(1);
 				pw = rs.getString(2);
+				System.out.println("아이디는 : " + userText.getText());
 
 				if (userText.getText().equals(id)) {
 					if (new String(passText.getPassword()).equals(pw)) {
@@ -210,6 +168,24 @@ public class LoginView extends JFrame {
 			System.out.println(se.getMessage());
 		}
 
+	}
+	
+	
+
+	public static String getId() {
+		return id;
+	}
+
+	public static void setId(String id) {
+		LoginView.id = id;
+	}
+
+	public static JTextField getUserText() {
+		return userText;
+	}
+
+	public static void setUserText(JTextField userText) {
+		LoginView.userText = userText;
 	}
 
 	// mainProcess와 연동
