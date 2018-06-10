@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class Member_List extends JFrame implements MouseListener, ActionListener {
@@ -139,7 +138,7 @@ public class Member_List extends JFrame implements MouseListener, ActionListener
 		if (e.getSource() == btnInsert) {
 			new MemberProc(this);
 
-			/* 테스트 */
+			// 테스트 
 			// dao = new MemberDAO();
 			// dao.userSelectAll(model);
 			// model.fireTableDataChanged();

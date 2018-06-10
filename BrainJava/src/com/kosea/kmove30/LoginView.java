@@ -1,8 +1,5 @@
 package com.kosea.kmove30;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -17,12 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
-import com.kosea.kmove30.JDBC_Manager;
 
 public class LoginView extends JFrame {
 
@@ -35,7 +28,6 @@ public class LoginView extends JFrame {
 	private static JPasswordField passText;
 	private static JTextField userText;
 	private static boolean bLoginCheck;
-	private DbLogIn dblogin;
 	public static String id = null;
 	public static String pw = null;
 
@@ -98,7 +90,6 @@ public class LoginView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				MemberProc memberproc = new MemberProc();
-
 			}
 		});
 
@@ -151,7 +142,7 @@ public class LoginView extends JFrame {
 			}
 
 			// 로그인 성공이라면 MainProcess 클래스의 showFrameTest 메소드 실행
-			if (isLogin()) {
+			if (bLoginCheck == true) {
 				main.showFrameTest(); // 메인창 메소드를 이용해 창띄우기
 			}
 
@@ -167,10 +158,12 @@ public class LoginView extends JFrame {
 		} catch (SQLException se) {
 			System.out.println(se.getMessage());
 		}
-
 	}
-	
-	
+
+	// mainProcess와 연동
+	public void setMain(MainProcess main) {
+		LoginView.main = main;
+	}
 
 	public static String getId() {
 		return id;
@@ -186,15 +179,6 @@ public class LoginView extends JFrame {
 
 	public static void setUserText(JTextField userText) {
 		LoginView.userText = userText;
-	}
-
-	// mainProcess와 연동
-	public void setMain(MainProcess main) {
-		LoginView.main = main;
-	}
-
-	public static boolean isLogin() {
-		return bLoginCheck;
 	}
 
 }

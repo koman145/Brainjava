@@ -206,7 +206,7 @@ public class Item {
 		}
 	}
 
-	// 하강 속도
+	// 아래로 한칸 움직임
 	public void moveDown() {
 		this.currentXY.move(0, 1);
 		this.setMove();

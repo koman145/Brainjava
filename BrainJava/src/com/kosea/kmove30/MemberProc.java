@@ -187,7 +187,7 @@ public class MemberProc extends JFrame implements ActionListener {
        
         //직업       
         JLabel bJob = new JLabel("직업 : ");
-        String[] arrJob = {"---", "학생", "직장인", "주부"};
+        String[] arrJob = {"---", "학생", "직장인", "주부", "기타"};
         cbJob = new JComboBox(arrJob);
         JPanel pJob = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pJob.add(cbJob);       

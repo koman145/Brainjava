@@ -5,13 +5,17 @@ public class Member {
 	int mno;
 	String id;
 	String pw;
+	
+	public  Member() {
+		
+	}
 
-/*	public Member(int mno, String id, String pw) {
+	public Member(int mno, String id, String pw) {
 		super();
 		this.mno = mno;
 		this.id = id;
 		this.pw = pw;
-	}*/
+	}
 
 	public int getMno() {
 		return mno;

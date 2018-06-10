@@ -18,7 +18,7 @@ public class MainProcess {
 
 	}
 
-	// 로그인 완료 후 데이터베이스(DbLogIn) 로그인 실행0
+	// 로그인 완료 후 데이터베이스(DbLogIn) 로그인 실행
 	public void showFrameTest() {
 
 		loginView.dispose(); // 로그인창닫기

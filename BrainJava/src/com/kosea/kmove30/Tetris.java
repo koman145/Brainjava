@@ -2,6 +2,7 @@ package com.kosea.kmove30;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.TextField;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;
@@ -12,8 +13,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
@@ -35,9 +38,11 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 	private ArrayList<Color> colorList; // 컬러리스트
 	private Random rnd;
 	private JPanel top, next, center; // 상단 가리는부분
+	private JPanel pointscreen; // 점수판
 	private boolean isKey = true; // 키보드활성화여부
 	private final Color bgColor = new Color(250, 250, 220); // 배경컬러
 	public static int sum = 0;
+	public static String point = null;
 	static DbLogIn dblogin;
 
 	// public static boolean isRight = false; //오른쪽여부
@@ -49,7 +54,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.xCnt = 14;
 		this.yCnt = 23;
 		this.time = 300;
-		this.area = 25;
+		this.area = 20;
 		this.width = this.xCnt * this.area;
 		this.height = this.yCnt * this.area;
 		this.itemList = new ArrayList<Item>();
@@ -85,21 +90,27 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.colorList.add(new Color(170, 40, 150)); // 보라
 
 		// 상단 셋팅 시작======
-
 		this.top = new JPanel();
+		this.pointscreen = new JPanel();
 		this.next = new JPanel();
 		this.top.setBounds(0, 0, this.xCnt * this.area, this.area * 4);
 		this.top.setBackground(new Color(244, 211, 99));
 		this.next.setBounds((this.xCnt - 4) * this.area, 0, this.area * 4, this.area * 4);
 		this.next.setBackground(new Color(245, 180, 250));
+		this.pointscreen.setBounds(0, 0, 50, this.area * 4);
+		this.pointscreen.setBackground(new Color(255, 255, 255));
 		this.center.add(this.top);
+		this.top.add(this.pointscreen);
 		this.top.setLayout(null);
 		this.top.add(this.next);
-
+		
+		System.out.println(point);
+		this.pointscreen.add(new JLabel("점수"));
+		this.pointscreen.add(new JLabel(point));
+		
 		// 상단 셋팅 끝======
 
 		// 백그라운드 패널 셋팅 시작 ==========
-
 		for (int i = 0; i < background.length; i++) {
 			for (int p = 0; p < background[i].length; p++) {
 				this.background[i][p] = new JPanel();
@@ -108,8 +119,6 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 				this.center.add(background[i][p]);
 			}
 		}
-
-		// 백그라운드 패널 셋팅 시작 ==========
 
 		// 아이템 시작셋팅
 		this.currentItem = itemList.get(rnd.nextInt(itemList.size()));
@@ -197,8 +206,35 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 				deleteLine(i);
 				point = point + 10;
 				sum += point;
+				// sum 값이 증가함에 따라 게임속도(this.time 값)이 낮아짐 (속도가 빨라짐)
+				
+				if (sum >= 70) {
+					this.time = 270; // 2단계
+					if (sum >= 140) {
+						this.time = 240; // 3단계
+						if (sum >= 210) {
+							this.time = 210; // 4단계
+							if (sum >= 280) {
+								this.time = 180; // 5단계
+								if (sum >= 350) {
+									this.time = 150; // 6단계
+									if (sum >= 420) {
+										this.time = 120; // 7단계
+										if (sum >= 490) {
+											this.time = 90; // 8단계
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
+			
+			point = String.valueOf(sum);
+					
 		}
+
 	}
 
 	public static int getSum() {
@@ -338,22 +374,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 	// 게임종료체크
 	public void gameEnd() {
 
-		// JOptionPane.showMessageDialog(null, "GAME OVER", "게임종료",
-		// JOptionPane.ERROR_MESSAGE);
-		System.out.println("1");
-
-		int confirm = JOptionPane.showConfirmDialog(null, "재시작하시겠습니까?", "GAME OVER", // 삭제 경고문 창
-				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-		
-		/*
-		if (confirm == 1) {// 아니오를 선택하면 게임종료
-			DbLogIn.main(null);
-			System.out.println("2");
-		} else { // 예를 누르면 게임재시작
-			Tetris.main(null);
-			System.out.println("3");
-		}
-		*/
+		dispose(); // 프레임 닫기
 
 		Connection conn = null;
 		Statement stmt = null;
@@ -367,7 +388,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 					"12345");
 			System.out.println("데이터베이스에 접속했습니다.");
 			stmt = conn.createStatement();
-			String sql = "INSERT INTO tetrispoint values('";
+			String sql = "INSERT INTO tetrispoint(id, tpoint) values('";
 			int changerecord = stmt.executeUpdate(sql + userid + "'," + sum + ")");
 
 			conn.close();
@@ -378,6 +399,19 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 			System.out.println(se.getMessage());
 		}
 
+		int confirm = JOptionPane.showConfirmDialog(null, "다시 하시겠습니까?", "GAME OVER", // 삭제 경고문 창
+				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+		if (confirm == 1) {// 아니오를 선택하면 메인창 띄우기
+			sum = 0;
+			DbLogIn.main("");
+		}
+		if (confirm == 0) {// 예를 선택하면 게임 재시작
+			sum = 0;
+			Tetris.main("");
+		}
+
+		t.stop(); // 프로세스 종료
 	}
 
 	// 쓰레드메인
@@ -402,7 +436,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		}
 	}
 
-	public static void main(String[] string) {
+	public static void main(String string) {
 		new Tetris("Tetris by JH");
 	}
 }

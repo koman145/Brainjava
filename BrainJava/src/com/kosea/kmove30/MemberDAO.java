@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 //DB 처리
