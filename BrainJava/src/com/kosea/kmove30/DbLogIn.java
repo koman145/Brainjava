@@ -30,7 +30,12 @@ public class DbLogIn extends JFrame {
 
 		String colNames[] = { "순위", "아이디", "점수" };
 
-		DefaultTableModel model = new DefaultTableModel(colNames, 0);
+		DefaultTableModel model = new DefaultTableModel(colNames, 0) {
+			public boolean isCellEditable(int i, int c) {
+				return false;								//불러온 테이블 값 수정 불가
+			}
+		};
+
 		JTable table = new JTable(model);
 		contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
 		JPanel panel = new JPanel();
@@ -84,7 +89,8 @@ public class DbLogIn extends JFrame {
 			System.out.println("데이터베이스에 접속했습니다.");
 
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT id, tpoint, @vRank := @vRank + 1 AS rank FROM tetrispoint AS p, (SELECT @vRank := 0) AS r ORDER BY tpoint DESC");
+			rs = stmt.executeQuery(
+					"SELECT id, tpoint, @vRank := @vRank + 1 AS rank FROM tetrispoint AS p, (SELECT @vRank := 0) AS r ORDER BY tpoint DESC");
 
 			while (rs.next()) {
 				arr[0] = rs.getString(3);
