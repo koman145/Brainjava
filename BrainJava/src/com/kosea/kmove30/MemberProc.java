@@ -32,7 +32,9 @@ public class MemberProc extends JFrame implements ActionListener {
     JTextField tfYear, tfMonth, tfDate; //생년월일
     JRadioButton rbMan, rbWoman; //남, 여
     JTextArea taIntro;
-    JButton btnInsert, btnCancel, btnUpdate,btnDelete; //가입, 취소, 수정 , 탈퇴 버튼
+    JButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck; //가입, 취소, 수정 , 탈퇴 버튼\
+    public static String phoneNo = null;
+    CheckPhoneNo checkPhoneNo = new CheckPhoneNo();
    
     GridBagLayout gb;
     GridBagConstraints gbc;
@@ -137,19 +139,19 @@ public class MemberProc extends JFrame implements ActionListener {
         tfId = new JTextField(20);     
         //그리드백에 붙이기
         gbAdd(bId, 0, 0, 1, 1);
-        gbAdd(tfId, 1, 0, 3, 1);
+        gbAdd(tfId, 1, 0, 10, 1);
        
         //비밀번호
         JLabel bPwd = new JLabel("비밀번호 : ");
         pfPwd = new JPasswordField(20);
         gbAdd(bPwd, 0, 1, 1, 1);
-        gbAdd(pfPwd, 1, 1, 3, 1);
+        gbAdd(pfPwd, 1, 1, 10, 1);
        
         //이름
         JLabel bName = new JLabel("이름 :");
         tfName = new JTextField(20);
         gbAdd(bName,0,2,1,1);
-        gbAdd(tfName,1,2,3,1);
+        gbAdd(tfName,1,2,10,1);
        
         //전화
         JLabel bTel = new JLabel("전화 :");
@@ -164,12 +166,15 @@ public class MemberProc extends JFrame implements ActionListener {
         pTel.add(tfTel3);
         gbAdd(bTel, 0, 3, 1,1);
         gbAdd(pTel, 1, 3, 3,1);
+        JLabel checkMessage = new JLabel("전화번호 인증하세요.");
+        gbAdd(checkMessage, 5, 4, 3, 1);
+        
        
         //주소
         JLabel bAddr = new JLabel("주소: ");
         tfAddr = new JTextField(20);
-        gbAdd(bAddr, 0,4,1,1);
-        gbAdd(tfAddr, 1, 4, 3,1);
+        gbAdd(bAddr, 0,5,1,1);
+        gbAdd(tfAddr, 1, 5, 10,1);
        
         //생일
         JLabel bBirth= new JLabel("생일: ");
@@ -182,8 +187,8 @@ public class MemberProc extends JFrame implements ActionListener {
         pBirth.add(tfMonth);
         pBirth.add(new JLabel("/"));
         pBirth.add(tfDate);
-        gbAdd(bBirth, 0,5,1,1);
-        gbAdd(pBirth, 1, 5, 3,1);
+        gbAdd(bBirth, 0,6,1,1);
+        gbAdd(pBirth, 1, 6, 10,1);
        
         //직업       
         JLabel bJob = new JLabel("직업 : ");
@@ -191,8 +196,8 @@ public class MemberProc extends JFrame implements ActionListener {
         cbJob = new JComboBox(arrJob);
         JPanel pJob = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pJob.add(cbJob);       
-        gbAdd(bJob, 0,6,1,1);
-        gbAdd(pJob,1,6,3,1);
+        gbAdd(bJob, 0,7,1,1);
+        gbAdd(pJob,1,7,10,1);
        
         //성별
         JLabel bGender = new JLabel("성별 : ");
@@ -204,41 +209,54 @@ public class MemberProc extends JFrame implements ActionListener {
         group.add(rbWoman);
         pGender.add(rbMan);
         pGender.add(rbWoman);      
-        gbAdd(bGender, 0,7,1,1);
-        gbAdd(pGender,1,7,3,1);
+        gbAdd(bGender, 0,8,1,1);
+        gbAdd(pGender,1,8,10,1);
        
         //이메일
         JLabel bEmail = new JLabel("이메일 : ");
         tfEmail = new JTextField(20);
-        gbAdd(bEmail, 0,8,1,1);
-        gbAdd(tfEmail,1,8,3,1);
+        gbAdd(bEmail, 0,9,1,1);
+        gbAdd(tfEmail,1,9,10,1);
        
         //자기소개
         JLabel bIntro = new JLabel("자기 소개: ");
         taIntro = new JTextArea(5, 20); //행 : 열
         JScrollPane pane = new JScrollPane(taIntro);
-        gbAdd(bIntro,0,9,1,1);
-        gbAdd(pane,1,9,3,1);
+        gbAdd(bIntro,0,10,1,1);
+        gbAdd(pane,1,10,10,1);
        
         //버튼
         JPanel pButton = new JPanel();
+        JPanel cButton = new JPanel();
         btnInsert = new JButton("가입");
         btnUpdate = new JButton("수정"); 
         btnDelete = new JButton("탈퇴");
-        btnCancel = new JButton("취소");     
+        btnCancel = new JButton("취소");
+        btnCheck  = new JButton("인증");
+        btnCheck.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				CheckPhoneNo.main("");
+			}
+		});
         pButton.add(btnInsert);
         pButton.add(btnUpdate);
         pButton.add(btnDelete);
-        pButton.add(btnCancel);    
-        gbAdd(pButton, 0, 10, 4, 1);
+        pButton.add(btnCancel);
+        cButton.add(btnCheck);
+        gbAdd(pButton, 0, 11, 4, 1);
+        gbAdd(cButton, 4, 3, 4, 1);
        
         //버튼에 감지기를 붙이자
         btnInsert.addActionListener(this);
         btnUpdate.addActionListener(this);
         btnCancel.addActionListener(this);
         btnDelete.addActionListener(this);
+        
        
-        setSize(350,500);
+        setSize(500,550);
         setVisible(true);
         //setDefaultCloseOperation(EXIT_ON_CLOSE); //System.exit(0) //프로그램종료
         setDefaultCloseOperation(DISPOSE_ON_CLOSE); //dispose(); //현재창만 닫는다.
@@ -348,8 +366,9 @@ public class MemberProc extends JFrame implements ActionListener {
        
        
        
-    }//insertMember
-   
+    }
+    
+    //insertMember
     public MemberDTO getViewData(){
        
         //화면에서 사용자가 입력한 내용을 얻는다.
@@ -377,7 +396,10 @@ public class MemberProc extends JFrame implements ActionListener {
        
         String email = tfEmail.getText();
         String intro = taIntro.getText();
-       
+        phoneNo = tel1 + tel2 + tel3;
+        
+        System.out.println(phoneNo);
+        		
         //dto에 담는다.
         dto.setId(id);
         dto.setPwd(pwd);

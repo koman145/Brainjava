@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +22,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class DbLogIn extends JFrame {
+
+	static String level[] = { "1단계", "2단계", "3단계", "4단계", "5단계", "6단계", "7단계", "8단계"};
+	static JComboBox<String> levelCombox = new JComboBox<String>(level);
+	public static String nowlevel = null;
 
 	public static void main(String string) {
 
@@ -32,7 +38,7 @@ public class DbLogIn extends JFrame {
 
 		DefaultTableModel model = new DefaultTableModel(colNames, 0) {
 			public boolean isCellEditable(int i, int c) {
-				return false;								//불러온 테이블 값 수정 불가
+				return false; // 불러온 테이블 값 수정 불가
 			}
 		};
 
@@ -40,9 +46,12 @@ public class DbLogIn extends JFrame {
 		contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
 		JPanel panel = new JPanel();
 
+		JLabel levelSelect = new JLabel("LEVEL");
 		JButton startBtn = new JButton("게임시작");
 		JButton selectBtn = new JButton("회원정보수정");
 
+		panel.add(levelSelect);
+		panel.add(levelCombox);
 		panel.add(startBtn);
 		panel.add(selectBtn);
 
@@ -58,6 +67,7 @@ public class DbLogIn extends JFrame {
 					return;
 				}
 				if (confirm == 0) {// 예를 선택하면 테트리스 실행
+					nowlevel = levelCombox.getSelectedItem().toString();
 					Tetris.main("");
 				}
 				frame.setVisible(false);
@@ -79,6 +89,7 @@ public class DbLogIn extends JFrame {
 		String arr[] = new String[3];
 
 		try {
+
 			arr[0] = null;
 			arr[1] = null;
 			arr[2] = null;
@@ -106,5 +117,13 @@ public class DbLogIn extends JFrame {
 		} catch (SQLException se) {
 			System.out.println(se.getMessage());
 		}
+	}
+
+	public static String getNowlevel() {
+		return nowlevel;
+	}
+
+	public static void setNowlevel(String nowlevel) {
+		DbLogIn.nowlevel = nowlevel;
 	}
 }
