@@ -25,6 +25,11 @@ public class MainProcess {
 
 		// DbLogIn 클래스  실행
 		DbLogIn.main("테트리스 by JH");
+		
+		//테스트
+		
+		
+		
 
 	}
 
