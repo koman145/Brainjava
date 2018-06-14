@@ -1,6 +1,6 @@
 package com.kosea.kmove30;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -228,6 +227,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		btnDelete.addActionListener(this);
 
 		setSize(380, 450);
+		setBackground(new Color(255, 255, 255));
 		setVisible(true);
 		// setDefaultCloseOperation(EXIT_ON_CLOSE); //System.exit(0) //프로그램종료
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE); // dispose(); //현재창만 닫는다.

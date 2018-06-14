@@ -86,10 +86,10 @@ public class LoginView extends JFrame {
 		btnInit.setBounds(10, 80, 100, 25);
 		panel.add(btnInit);
 		btnInit.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				MemberProc memberproc = new MemberProc();
+//				MemberProc memberproc = new MemberProc();
+				CheckPhoneNo check = new CheckPhoneNo();
 			}
 		});
 
