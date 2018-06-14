@@ -71,11 +71,8 @@ public class MemberDAO {
               dto.setPwd(rs.getString("Pwd"));
               dto.setName(rs.getString("Name"));
               dto.setTel(rs.getString("tel"));
-              dto.setAddr(rs.getString("addr"));
               dto.setBirth(rs.getString("birth"));
-              dto.setJob(rs.getString("job"));
               dto.setGender(rs.getString("gender"));
-              dto.setEmail(rs.getString("email"));
               dto.setIntro(rs.getString("intro"));
              
           }
@@ -111,11 +108,8 @@ public class MemberDAO {
               String pwd = rs.getString("pwd");
               String name = rs.getString("name");
               String tel = rs.getString("tel");
-              String addr = rs.getString("addr");
               String birth = rs.getString("birth");
               String gender = rs.getString("gender");
-              String job = rs.getString("job");
-              String email = rs.getString("email");
               String intro = rs.getString("intro");
              
               Vector row = new Vector();
@@ -123,11 +117,8 @@ public class MemberDAO {
               row.add(pwd);
               row.add(name);
               row.add(tel);
-              row.add(addr);
               row.add(birth);
-              row.add(job);
               row.add(gender);
-              row.add(email);
               row.add(intro);
              
               data.add(row);             
@@ -152,21 +143,18 @@ public class MemberDAO {
          
           con = getConn();
           String sql = "insert into Tetrismember(" +
-                      "id,pwd,name,tel,addr,birth," +
-                      "job,gender,email,intro) "+
-                      "values(?,?,?,?,?,?,?,?,?,?)";
+                      "id,pwd,name,tel,birth," +
+                      "gender,intro) "+
+                      "values(?,?,?,?,?,?,?)";
          
           ps = con.prepareStatement(sql);
           ps.setString(1, dto.getId());
           ps.setString(2, dto.getPwd());
           ps.setString(3, dto.getName());
           ps.setString(4, dto.getTel());
-          ps.setString(5, dto.getAddr());
-          ps.setString(6, dto.getBirth());
-          ps.setString(7, dto.getJob());
-          ps.setString(8, dto.getGender());
-          ps.setString(9, dto.getEmail());
-          ps.setString(10, dto.getIntro());          
+          ps.setString(5, dto.getBirth());
+          ps.setString(6, dto.getGender());
+          ps.setString(7, dto.getIntro());          
           int r = ps.executeUpdate(); //실행 -> 저장
          
          
@@ -198,21 +186,18 @@ public class MemberDAO {
          
     	  con = getConn(); 
           
-          String sql = "update Tetrismember set name=?, tel=?, addr=?, birth=?, job=?, gender=?" +
-                  ", email=?,intro=? "+ "where id=? and pwd=?";
+          String sql = "update Tetrismember set name=?, tel=?, birth=?, gender=?" +
+                  ",intro=? where id=? and pwd=?";
          
           ps = con.prepareStatement(sql);
          
           ps.setString(1, vMem.getName());
           ps.setString(2, vMem.getTel());
-          ps.setString(3, vMem.getAddr());
-          ps.setString(4, vMem.getBirth());
-          ps.setString(5, vMem.getJob());
-          ps.setString(6, vMem.getGender());
-          ps.setString(7, vMem.getEmail());
-          ps.setString(8, vMem.getIntro());
-          ps.setString(9, vMem.getId());
-          ps.setString(10, vMem.getPwd());
+          ps.setString(3, vMem.getBirth());
+          ps.setString(4, vMem.getGender());
+          ps.setString(5, vMem.getIntro());
+          ps.setString(6, vMem.getId());
+          ps.setString(7, vMem.getPwd());
          
           int r = ps.executeUpdate(); //실행 -> 수정
           // 1~n: 성공 , 0 : 실패

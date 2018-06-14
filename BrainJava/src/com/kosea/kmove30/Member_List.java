@@ -75,9 +75,7 @@ public class Member_List extends JFrame implements MouseListener, ActionListener
 		col.add("비밀번호");
 		col.add("이름");
 		col.add("전화");
-		col.add("주소");
 		col.add("생일");
-		col.add("직업");
 		col.add("성별");
 		col.add("이메일");
 		col.add("자기소개");
