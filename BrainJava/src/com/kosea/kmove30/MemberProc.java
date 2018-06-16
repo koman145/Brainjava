@@ -150,8 +150,14 @@ public class MemberProc extends JFrame implements ActionListener {
 		JLabel bTel = new JLabel(" 전화 (인증완료)");
 		JPanel pTel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		tfTel1 = new JTextField(6);
+		tfTel1.setText(CheckPhoneNo.getpNo1());
+		tfTel1.setEnabled(false);
 		tfTel2 = new JTextField(6);
+		tfTel2.setText(CheckPhoneNo.getpNo2());
+		tfTel2.setEnabled(false);
 		tfTel3 = new JTextField(6);
+		tfTel3.setText(CheckPhoneNo.getpNo3());
+		tfTel3.setEnabled(false);
 		pTel.add(tfTel1);
 		pTel.add(new JLabel(" - "));
 		pTel.add(tfTel2);
@@ -245,7 +251,6 @@ public class MemberProc extends JFrame implements ActionListener {
 	}// gbAdd
 
 	public static void main(String[] args) {
-
 		new MemberProc();
 	}
 
@@ -262,16 +267,16 @@ public class MemberProc extends JFrame implements ActionListener {
 		} else if (ae.getSource() == btnDelete) {
 			// int x = JOptionPane.showConfirmDialog(this,"정말 삭제하시겠습니까?");
 			int x = JOptionPane.showConfirmDialog(this, "정말 삭제하시겠습니까?", "삭제", JOptionPane.YES_NO_OPTION);
-
 			if (x == JOptionPane.OK_OPTION) {
 				deleteMember();
+				MainProcess.main(null);
 			} else {
 				JOptionPane.showMessageDialog(this, "삭제를 취소하였습니다.");
 			}
 		}
 
 		// jTable내용 갱신 메소드 호출
-		mList.jTableRefresh();
+//		mList.jTableRefresh();
 
 	}// actionPerformed
 
@@ -279,7 +284,6 @@ public class MemberProc extends JFrame implements ActionListener {
 		String id = tfId.getText();
 		String pwd = pfPwd.getText();
 		if (pwd.length() == 0) { // 길이가 0이면
-
 			JOptionPane.showMessageDialog(this, "비밀번호를 꼭 입력하세요!");
 			return; // 메소드 끝
 		}
@@ -288,14 +292,12 @@ public class MemberProc extends JFrame implements ActionListener {
 		boolean ok = dao.deleteMember(id, pwd);
 
 		if (ok) {
-			JOptionPane.showMessageDialog(this, "삭제완료");
+			JOptionPane.showMessageDialog(this, "삭제되었습니다.");
 			dispose();
 
 		} else {
 			JOptionPane.showMessageDialog(this, "삭제실패");
-
 		}
-
 	}// deleteMember
 
 	private void UpdateMember() {
@@ -311,6 +313,7 @@ public class MemberProc extends JFrame implements ActionListener {
 
 			if (x == JOptionPane.OK_OPTION) {
 				JOptionPane.showMessageDialog(this, "수정되었습니다.");
+				DbLogIn.main(null);
 				this.dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "수정을 취소하였습니다.");
@@ -331,6 +334,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		if (ok) {
 
 			JOptionPane.showMessageDialog(this, "가입이 완료되었습니다.");
+			MainProcess.main(null);
 			dispose();
 
 		} else {

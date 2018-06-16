@@ -29,6 +29,7 @@ public class CheckPhoneNo extends JFrame {
 	// private static boolean bLoginCheck;
 	public static String id = null;
 	public static String pw = null;
+	public static String pNo = null;
 
 	public static void main(String[] args) {
 
@@ -170,7 +171,8 @@ public class CheckPhoneNo extends JFrame {
 					pNo1 = phoneNoText1.getText();
 					pNo2 = phoneNoText2.getText();
 					pNo3 = phoneNoText3.getText();
-					System.out.println(pNo1 + "-" + pNo2 + "-" + pNo3);
+					pNo = pNo1 + pNo2 + pNo3;
+					System.out.println(pNo);
 					dispose();
 					SendExample.main(null);
 					CheckCodeNo checkCodeNo = new CheckCodeNo();
@@ -223,6 +225,15 @@ public class CheckPhoneNo extends JFrame {
 	public static void setpNo3(String pNo3) {
 		CheckPhoneNo.pNo3 = pNo3;
 	}
+
+	public static String getpNo() {
+		return pNo;
+	}
+
+	public static void setpNo(String pNo) {
+		CheckPhoneNo.pNo = pNo;
+	}
+	
 	
 	
 }

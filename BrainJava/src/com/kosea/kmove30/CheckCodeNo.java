@@ -159,12 +159,29 @@ public class CheckCodeNo extends JFrame {
 		CodeNoText = new JTextField(10);
 		CodeNoText.setBounds(30, 25, 0, 0);
 		guideLine.add(CodeNoText);
-		//CodeNoText.getText().toString();
-		
+		// CodeNoText.getText().toString();
 
 		btnRe = new JButton("재전송");
 		btnRe.setBounds(80, 420, 80, 25);
 		guideLine.add(btnRe);
+		btnRe.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int confirm = JOptionPane.showConfirmDialog(null, "재전송 하시겠습니까?", "재전송 확인", // 삭제 경고문 창
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+				if (confirm == 1) {// 아니오
+					return;
+				}
+				if (confirm == 0) {// 예
+					dispose();
+					SendExample.main(null);
+					CheckCodeNo checkCodeNo = new CheckCodeNo();
+				}
+			}
+		});
 
 		JLabel Label1 = new JLabel("※ 승인번호가 도착하지 않은 경우");
 		Label1.setForeground(java.awt.Color.black); // 글자색 변경

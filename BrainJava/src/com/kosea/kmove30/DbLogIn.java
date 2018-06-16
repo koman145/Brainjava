@@ -23,9 +23,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class DbLogIn extends JFrame {
 
-	static String level[] = { "1단계", "2단계", "3단계", "4단계", "5단계", "6단계", "7단계", "8단계"};
+	static String level[] = { "1단계", "2단계", "3단계", "4단계", "5단계", "6단계", "7단계", "8단계" };
 	static JComboBox<String> levelCombox = new JComboBox<String>(level);
 	public static String nowlevel = null;
+	public static String id = LoginView.getUserText().getText();
+	public static Member_List mList = null;
 
 	public static void main(String string) {
 
@@ -70,11 +72,26 @@ public class DbLogIn extends JFrame {
 					nowlevel = levelCombox.getSelectedItem().toString();
 					Tetris.main("");
 				}
-				frame.setVisible(false);
 			}
 		});
 
-		selectBtn.addActionListener(new Addselect());
+		selectBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(null, "정보를 수정하시겠습니까?", "정보수정", // 정보 수정 알림 창
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+				System.out.println("confirm : " + confirm);
+
+				if (confirm == 1) {// 아니오를 선택하면 종료
+					return;
+				} else {
+					frame.setVisible(false);
+					MemberProc memberproc = new MemberProc(id, mList);
+				}
+			}
+		});
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
