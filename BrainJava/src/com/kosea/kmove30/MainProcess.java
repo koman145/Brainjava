@@ -20,7 +20,7 @@ public class MainProcess {
 
 	// 로그인 완료 후 데이터베이스(DbLogIn) 로그인 실행
 	public void showFrameTest() {
-		loginView.dispose(); // 로그인창닫기
+		loginView.dispose(); // 로그인창닫기 
 		// DbLogIn 클래스 실행
 		DbLogIn.main("테트리스 by JH");
 	}

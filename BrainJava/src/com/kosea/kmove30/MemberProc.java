@@ -35,7 +35,6 @@ public class MemberProc extends JFrame implements ActionListener {
 	JTextArea taIntro;
 	JButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck; // 가입, 취소, 수정 , 탈퇴 버튼\
 	public static String phoneNo = null;
-	CheckPhoneNo checkPhoneNo = new CheckPhoneNo();
 	int[] arrYear = new int[2018 - 1900];
 	int[] arrMonth = new int[12];
 	int[] arrDate = new int[31];

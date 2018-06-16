@@ -89,6 +89,7 @@ public class LoginView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 //				MemberProc memberproc = new MemberProc();
+				dispose();
 				CheckPhoneNo check = new CheckPhoneNo();
 			}
 		});
