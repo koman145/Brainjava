@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 public class CheckCodeNo extends JFrame {
 
+	JPanel guideLine = new JPanel();
 	public static String pNo1, pNo2, pNo3;
 
 	JDBC_Manager jdbcManager;
@@ -32,15 +33,18 @@ public class CheckCodeNo extends JFrame {
 	public static String pw = null;
 	public static String codeCheck = SendExample.getCode();
 	public static String code;
+	public static CodeTimer codeTimer = new CodeTimer();
+	public static JLabel countLabel;
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static void main(String[] args) {
-
-		System.out.println(codeCheck);
-
 		new CheckCodeNo();
+		CodeTimer.main(null); // 카운트 다운 시작
 	}
 
 	public CheckCodeNo() {
+
 		// setting
 		setTitle("휴대폰  인증");
 		setSize(380, 500);
@@ -62,10 +66,9 @@ public class CheckCodeNo extends JFrame {
 
 	public void placeCheckPanel(JPanel panel) {
 
-		JPanel guideLine = new JPanel();
 		guideLine.setBorder(new TitledBorder(new LineBorder(Color.DARK_GRAY, 5)));
 		guideLine.setLocation(5, 205);
-		guideLine.setSize(360, 70);
+		guideLine.setSize(360, 90);
 		panel.add(guideLine);
 
 		// 프레임 짜기
@@ -146,7 +149,7 @@ public class CheckCodeNo extends JFrame {
 		line.setBounds(10, 180, 350, 25);
 		panel.add(line);
 
-		JLabel checkLabel = new JLabel("※ 받으신 인증번호 4자리를 입력하신 후 확인을 눌러주세요.");
+		JLabel checkLabel = new JLabel("※ 받으신 인증번호 6자리를 입력하신 후 확인을 눌러주세요.");
 		checkLabel.setForeground(java.awt.Color.black); // 글자색 변경
 		checkLabel.setBounds(20, 250, 380, 60);
 		guideLine.add(checkLabel);
@@ -177,26 +180,45 @@ public class CheckCodeNo extends JFrame {
 				}
 				if (confirm == 0) {// 예
 					dispose();
-					SendExample.main(null);
+					
+					SendExample.main(null);	//인증번호 재전송
 					CheckCodeNo checkCodeNo = new CheckCodeNo();
 				}
 			}
 		});
 
+		JLabel countLabel1 = new JLabel("( 남은시간");
+		countLabel1.setFont(new Font("굴림체", Font.BOLD, 12));
+		guideLine.add(countLabel1);
+
+		
+		countLabel = CodeTimer.countLabel;		//카운트다운 구현 03:00
+		guideLine.add(countLabel);
+		
+		JLabel countLabel2 = new JLabel(")");
+		countLabel2.setFont(new Font("굴림체", Font.BOLD, 12));
+		guideLine.add(countLabel2);
+		
+
 		JLabel Label1 = new JLabel("※ 승인번호가 도착하지 않은 경우");
 		Label1.setForeground(java.awt.Color.black); // 글자색 변경
-		Label1.setBounds(20, 270, 380, 60);
+		Label1.setBounds(20, 290, 380, 60);
 		panel.add(Label1);
 
 		JLabel Label2 = new JLabel("1. 문자메세지 수신 가능 지역 확인");
 		Label2.setForeground(java.awt.Color.black); // 글자색 변경
-		Label2.setBounds(34, 285, 380, 60);
+		Label2.setBounds(34, 305, 380, 60);
 		panel.add(Label2);
 
-		JLabel Label3 = new JLabel("※ 인증번호는 최대한 빨리 입력해주시기 바랍니다.");
+		JLabel Label3 = new JLabel("2. 전화번호 확인");
 		Label3.setForeground(java.awt.Color.black); // 글자색 변경
-		Label3.setBounds(20, 305, 380, 60);
+		Label3.setBounds(34, 320, 380, 60);
 		panel.add(Label3);
+
+		JLabel Label4 = new JLabel("※ 인증번호는 시간 내에 입력해주시기 바랍니다.");
+		Label4.setForeground(java.awt.Color.black); // 글자색 변경
+		Label4.setBounds(20, 340, 380, 60);
+		panel.add(Label4);
 
 		// 회원가입 버튼을 누르면 회원 아이디, 비밀번호를 추가하는 테이블 실행
 		checkbtn = new JButton("확인");

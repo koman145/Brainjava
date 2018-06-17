@@ -32,7 +32,6 @@ public class CheckPhoneNo extends JFrame {
 	public static String pNo = null;
 
 	public static void main(String[] args) {
-
 		new CheckPhoneNo();
 	}
 
@@ -61,7 +60,7 @@ public class CheckPhoneNo extends JFrame {
 		JPanel guideLine = new JPanel();
 		guideLine.setBorder(new TitledBorder(new LineBorder(Color.DARK_GRAY, 5)));
 		guideLine.setLocation(10, 205);
-		guideLine.setSize(350, 50);
+		guideLine.setSize(350, 40);
 		panel.add(guideLine);
 
 		// 프레임 짜기

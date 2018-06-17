@@ -1,17 +1,27 @@
 package com.kosea.kmove30;
 
-import java.util.HashMap;
 import java.util.Random;
-
-import org.json.simple.JSONObject;
 
 public class SendExample {
 
-	public static Random key = new Random();
-	public static int result = key.nextInt(10000) + 1000;
-	public static String code;
+	public static Random key; //= new Random(System.currentTimeMillis());
+	public static int result; //= (int) Math.abs(key.nextInt(8999)+1000);
+	public static String code; //= String.valueOf(result);
+//	public static int result = key.nextInt(10000) + 1000;
+//	public static String code;
+	
+	/*public static Random randomGenerator = new Random();
+	public static int start = 10000;
+	public static int end = 99999;
+	public static double range = end - start + 1;
+	public static int randomInt = (int)(randomGenerator.nextDouble() * range + start);
+	public static String code = String.valueOf(randomInt);*/
 
 	public static void main(String[] args) {
+		
+		key = new Random(System.currentTimeMillis());
+		result = (int) Math.abs(key.nextInt(899999)+100000);
+		code = String.valueOf(result);
 
 		/*
 		 * 서버에서 받은 API_KEY, API_SECRET를 입력해주세요.
@@ -23,14 +33,20 @@ public class SendExample {
 		Coolsms coolsms = new Coolsms(api_key, api_secret);
 		*/
 		
+
+		
 		String phoneNumber;
 		phoneNumber = CheckPhoneNo.getpNo();
-
+		
+		/*
 		if (result > 10000) {
 			result = result - 1000;
 		}
 		code = Integer.toString(result);
+		*/
+		
 		System.out.println(code);
+		
 		System.out.println(phoneNumber);
 
 		
