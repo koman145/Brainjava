@@ -48,6 +48,7 @@ public class MemberProc extends JFrame implements ActionListener {
 	int[] arrYear = new int[2018 - 1900];
 	int[] arrMonth = new int[12];
 	int[] arrDate = new int[31];
+	public static int insertA, insertB;
 
 	GridBagLayout gb;
 	GridBagConstraints gbc;
@@ -179,14 +180,14 @@ public class MemberProc extends JFrame implements ActionListener {
 							System.out.println("true 실행");
 							bIdCh.setText("이미  사용중인 아이디입니다.");
 							bIdCh.setForeground(java.awt.Color.red);
-							btnInsert.setEnabled(false);
+							insertA = 0;
 						}
 
 						if (rsString.equals("false")) { // 입력한 ID가 tetrismember에 존재하지않는다면 (false값이라면) 가입가능
 							System.out.println("false 실행");
 							bIdCh.setText("사용할 수 있는 아이디입니다.");
 							bIdCh.setForeground(java.awt.Color.blue);
-							btnInsert.setEnabled(true);
+							insertA = 1;
 						}
 						conn.close();
 					} catch (ClassNotFoundException cnfe) {
@@ -194,6 +195,10 @@ public class MemberProc extends JFrame implements ActionListener {
 					} catch (SQLException se) {
 						System.out.println(se.getMessage());
 					}
+				}
+
+				if (insertA == 1 & insertB == 1) {
+					btnInsert.setEnabled(true);
 				}
 			}
 		});
@@ -216,20 +221,26 @@ public class MemberProc extends JFrame implements ActionListener {
 		pfPwdCh.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 			}
+
 			public void keyReleased(KeyEvent e) {
 				System.out.println(pfPwd.getText());
 				System.out.println(pfPwdCh.getText());
 				if (pfPwd.getText().equals(pfPwdCh.getText())) { // 비밀번호와 비밀번호확인에 입력된 값이 같다면 가입가능
 					pwCheck.setText("비밀번호가 같습니다.");
 					pwCheck.setForeground(java.awt.Color.blue);
-					btnInsert.setEnabled(true);
+					insertB = 1;
 				}
 				if (!pfPwd.getText().equals(pfPwdCh.getText())) { // 비밀번호와 비밀번호확인에 입력된 값이 다르다면 가입불가
 					pwCheck.setText("비밀번호가 다릅니다.");
 					pwCheck.setForeground(java.awt.Color.red);
-					btnInsert.setEnabled(false);
+					insertB = 0;
+				}
+
+				if (insertA == 1 & insertB == 1) {
+					btnInsert.setEnabled(true);
 				}
 			}
+
 			public void keyPressed(KeyEvent e) {
 			}
 		});
@@ -270,10 +281,10 @@ public class MemberProc extends JFrame implements ActionListener {
 		String Year = Arrays.toString(arrYear);
 		String[] arrYear = Year.substring(1, Year.length() - 1).split(", ");
 		// 월 설정
-		String[] arrMonth = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
+		String[] arrMonth = { "--", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
 		// 일 설정
-		String[] arrDate = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15",
-				"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
+		String[] arrDate = { "--", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14",
+				"15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
 		tfYear = new JComboBox<>(arrYear);
 		tfMonth = new JComboBox<>(arrMonth);
 		tfDate = new JComboBox<>(arrDate);
@@ -314,6 +325,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		btnDelete = new JButton("탈퇴");
 		btnCancel = new JButton("취소");
 		pButton.add(btnInsert);
+		btnInsert.setEnabled(false);
 		pButton.add(btnUpdate);
 		pButton.add(btnDelete);
 		pButton.add(btnCancel);
@@ -328,8 +340,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		setSize(500, 600);
 		setBackground(new Color(255, 255, 255));
 		setVisible(true);
-		// setDefaultCloseOperation(EXIT_ON_CLOSE); //System.exit(0) //프로그램종료
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE); // dispose(); //현재창만 닫는다.
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	}// createUI
 
@@ -419,23 +430,33 @@ public class MemberProc extends JFrame implements ActionListener {
 	}
 
 	private void insertMember() {
-
-		// 화면에서 사용자가 입력한 내용을 얻는다.
-		MemberDTO dto = getViewData();
-		MemberDAO dao = new MemberDAO();
-		boolean ok = dao.insertMember(dto);
-
-		if (ok) {
-
-			JOptionPane.showMessageDialog(this, "가입이 완료되었습니다.");
-			MainProcess.main(null);
-			dispose();
-
+		String name = tfName.getText();
+		String birth1 = (String) tfYear.getSelectedItem();
+		String birth2 = (String) tfMonth.getSelectedItem();
+		String birth3 = (String) tfDate.getSelectedItem();
+		if (name.length() == 0) {
+			JOptionPane.showMessageDialog(this, "이름을 입력해주세요.");
+		} else if (birth1.equals("1900") || birth2.equals("--") || birth3.equals("--")) {
+			JOptionPane.showMessageDialog(this, "생년월일을 선택해주세요");
 		} else {
 
-			JOptionPane.showMessageDialog(this, "가입이 정상적으로 처리되지 않았습니다.");
+			int x = JOptionPane.showConfirmDialog(this, "생년월일은 수정할 수 없습니다. 다시한번 확인하여 주십시오. 가입하시겠습니까? ", "가입",
+					JOptionPane.YES_NO_OPTION);
+			if (x == JOptionPane.OK_OPTION) {
+				MemberDTO dto = getViewData();
+				MemberDAO dao = new MemberDAO();
+				boolean ok = dao.insertMember(dto);
+				if (ok) {
+					JOptionPane.showMessageDialog(this, "가입이 완료되었습니다.");
+					MainProcess.main(null);
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(this, "가입이 정상적으로 처리되지 않았습니다.");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "취소하였습니다.");
+			}
 		}
-
 	}
 
 	// insertMember

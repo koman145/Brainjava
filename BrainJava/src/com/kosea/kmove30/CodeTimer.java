@@ -15,7 +15,6 @@ public class CodeTimer extends Thread {
 	TimerTask task = new TimerTask() {
 		public void run() {
 			time1 = getTime(i);
-			System.out.println(getTime(i));
 			i--;
 			countLabel.setText(time1);
 			countLabel.setForeground(java.awt.Color.red); // 글자색 변경

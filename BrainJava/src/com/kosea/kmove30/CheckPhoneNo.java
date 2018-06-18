@@ -114,6 +114,7 @@ public class CheckPhoneNo extends JFrame {
 		phoneNoText1 = new JTextField(4);
 		phoneNoText1.setBounds(30, 25, 0, 0);
 		guideLine.add(phoneNoText1);
+		phoneNoText1.setDocument(new JTextFieldLimit(3));
 
 		JLabel phoneLabel1 = new JLabel(" - ");
 		phoneLabel1.setBounds(45, 25, 10, 10);
@@ -122,6 +123,7 @@ public class CheckPhoneNo extends JFrame {
 		phoneNoText2 = new JTextField(4);
 		phoneNoText2.setBounds(60, 25, 4, 1);
 		guideLine.add(phoneNoText2);
+		phoneNoText2.setDocument(new JTextFieldLimit(4));
 
 		JLabel phoneLabel2 = new JLabel(" - ");
 		phoneLabel2.setBounds(75, 25, 10, 10);
@@ -130,6 +132,7 @@ public class CheckPhoneNo extends JFrame {
 		phoneNoText3 = new JTextField(4);
 		phoneNoText3.setBounds(100, 25, 4, 1);
 		guideLine.add(phoneNoText3);
+		phoneNoText3.setDocument(new JTextFieldLimit(4));
 
 		JLabel Label1 = new JLabel("※ 본인 명의의 휴대폰 정보를 정확히 입력하여 주시기");
 		Label1.setForeground(java.awt.Color.black); // 글자색 변경

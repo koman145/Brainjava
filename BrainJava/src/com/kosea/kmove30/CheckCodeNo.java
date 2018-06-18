@@ -231,7 +231,7 @@ public class CheckCodeNo extends JFrame {
 		Label2.setBounds(34, 305, 380, 60);
 		panel.add(Label2);
 
-		JLabel Label3 = new JLabel("2. 전화번호 확인");
+		JLabel Label3 = new JLabel("2. 전화번호를 확인해주세요");
 		Label3.setForeground(java.awt.Color.black); // 글자색 변경
 		Label3.setBounds(34, 320, 380, 60);
 		panel.add(Label3);

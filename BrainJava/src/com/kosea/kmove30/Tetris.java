@@ -129,6 +129,13 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.colorList.add(Color.green);
 		this.colorList.add(Color.orange);
 		this.colorList.add(Color.pink);
+		this.colorList.add(Color.CYAN);
+		this.colorList.add(Color.DARK_GRAY);
+		this.colorList.add(Color.GRAY);
+		this.colorList.add(Color.GREEN);
+		this.colorList.add(Color.LIGHT_GRAY);
+		this.colorList.add(Color.MAGENTA);
+		this.colorList.add(Color.YELLOW);
 		this.colorList.add(new Color(170, 40, 150)); // 보라
 
 		// 상단 셋팅
@@ -153,7 +160,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		pointtext.setText("0점");
 		pointtext.setForeground(java.awt.Color.BLUE);
 
-		JLabel AAA = new JLabel("        ");
+		JLabel AAA = new JLabel("        "); //점수창칸나눔
 		this.pointscreen.add(AAA);
 
 		this.pointscreen.add(new JLabel("레벨"));
