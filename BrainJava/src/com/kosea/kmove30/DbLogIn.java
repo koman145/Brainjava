@@ -70,6 +70,8 @@ public class DbLogIn extends JFrame {
 					return;
 				}
 				if (confirm == 0) {// 예를 선택하면 테트리스 실행
+
+					frame.setVisible(false);
 					nowlevel = levelCombox.getSelectedItem().toString();
 					Tetris.main("");
 				}
@@ -81,8 +83,6 @@ public class DbLogIn extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "정보를 수정하시겠습니까?", "정보수정", // 정보 수정 알림 창
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-				System.out.println("confirm : " + confirm);
-
 				if (confirm == 1) {// 아니오를 선택하면 종료
 					return;
 				} else {
@@ -91,7 +91,7 @@ public class DbLogIn extends JFrame {
 				}
 			}
 		});
-		
+
 		logoutBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int confirm = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?", "로그아웃", // 로그아웃 알림창
@@ -105,7 +105,7 @@ public class DbLogIn extends JFrame {
 					frame.setVisible(false);
 					MainProcess.main(null);
 				}
-				
+
 			}
 		});
 

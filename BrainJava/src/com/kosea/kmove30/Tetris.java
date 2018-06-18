@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
@@ -38,26 +37,65 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 	private Random rnd;
 	private JPanel top, next, center; // 상단 가리는부분
 	private JPanel pointscreen; // 점수판
-	// private JPanel hardMode;
 	private boolean isKey = true; // 키보드활성화여부
 	private final Color bgColor = new Color(250, 250, 220); // 배경컬러
 	public static int sum = 0;
-	public static int level = 1;
 	public static String point = null;
 	static DbLogIn dblogin;
 	static String nowlevel = DbLogIn.getNowlevel();
+	public static String level = String.valueOf(nowlevel);
 	JLabel pointtext = new JLabel();
 	JLabel leveltext = new JLabel();
+	public static boolean isLine;
 
 	// public static boolean isRight = false; //오른쪽여부
 	Thread t;
 
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
 	public Tetris(String str) {
+
 		// ========== 기본설정 셋팅 시작 ===========
+
+		if (nowlevel.equals("1단계") || nowlevel.equals("2단계") || nowlevel.equals("3단계") || nowlevel.equals("4단계")
+				|| nowlevel.equals("5단계") || nowlevel.equals("6단계") || nowlevel.equals("7단계")
+				|| nowlevel.equals("8단계")) {
+			this.time = 300; // 1단계
+			if (nowlevel.equals("2단계") || nowlevel.equals("3단계") || nowlevel.equals("4단계") || nowlevel.equals("5단계")
+					|| nowlevel.equals("6단계") || nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+				this.time = 270; // 2단계
+				if (nowlevel.equals("3단계") || nowlevel.equals("4단계") || nowlevel.equals("5단계") || nowlevel.equals("6단계")
+						|| nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+					this.time = 240; // 3단계
+					if (nowlevel.equals("4단계") || nowlevel.equals("5단계") || nowlevel.equals("6단계")
+							|| nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+						this.time = 210; // 4단계
+						if (nowlevel.equals("5단계") || nowlevel.equals("6단계") || nowlevel.equals("7단계")
+								|| nowlevel.equals("8단계")) {
+							this.time = 180; // 5단계
+							if (nowlevel.equals("6단계") || nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+								this.time = 150; // 6단계
+								if (nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+									this.time = 120; // 7단계
+									if (nowlevel.equals("8단계")) {
+										this.time = 90; // 8단계
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		this.setTitle(str);
 		this.xCnt = 14;
 		this.yCnt = 23;
-		this.time = 300;
 		this.area = 30;
 		this.width = (this.xCnt * this.area) + 11;
 		this.height = (this.yCnt * this.area) + 4;
@@ -97,7 +135,6 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		// 시작======///////////////////////////////////////////////////////////////////////////////////
 		this.top = new JPanel();
 		this.pointscreen = new JPanel();
-		// this.hardMode = new JPanel();
 		this.next = new JPanel();
 		this.top.setBounds(0, 0, this.xCnt * this.area, this.area * 4);
 		this.top.setBackground(new Color(244, 211, 99));
@@ -105,11 +142,8 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.next.setBackground(new Color(245, 180, 250));
 		this.pointscreen.setBounds(0, 0, 50, this.area * 4);
 		this.pointscreen.setBackground(new Color(255, 255, 255));
-		// this.hardMode.setBounds(50, 0, (this.xCnt * this.area) - 50, this.area * 4);
-		// this.hardMode.setBackground(new Color(0, 0, 0));
 		this.center.add(this.top);
 		this.top.add(this.pointscreen);
-		// this.top.add(this.hardMode);
 		this.top.setLayout(null);
 		this.top.add(this.next);
 
@@ -117,13 +151,15 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.pointscreen.add(new JLabel("점수"));
 		this.pointscreen.add(pointtext);
 		pointtext.setText("0점");
-		pointtext.setForeground(java.awt.Color.ORANGE);
-//		pointtext.setEnabled(false);
+		pointtext.setForeground(java.awt.Color.BLUE);
+
+		JLabel AAA = new JLabel("        ");
+		this.pointscreen.add(AAA);
+
 		this.pointscreen.add(new JLabel("레벨"));
 		this.pointscreen.add(leveltext);
-		leveltext.setText("1단계");
+		leveltext.setText(nowlevel);
 		leveltext.setForeground(java.awt.Color.ORANGE);
-//		leveltext.setEnabled(false);
 
 		// 상단 셋팅 끝======////////////////////////////////////////////////
 
@@ -200,23 +236,15 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 	public void checkLine() {
 		for (int i = 0; i < grid[0].length; i++) // i = Y값 = ROW
 		{
-
-			// System.out.println(
-			boolean isLine = true;
+			isLine = true;
 			for (int p = 0; p < grid.length; p++) // p = X값 = Column
 			{
-
-				// System.out.print(p+","+i+" : " + grid[p][i]);
 				if (!grid[p][i]) // 하나라도 공백이 있으면 break;
 				{
 					isLine = false;
 					break;
 				}
 			}
-
-			// 한줄 없앨 때 마다 10점(point 에 저장)
-			// 없앤 줄 x 10 ( point ) 값을 sum 에 더해서 저장
-			// 전체 점수는 sum 에 저장됨
 			if (isLine) // 줄없앰 and 점수 증가
 			{
 				int point = 0;
@@ -224,35 +252,29 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 				point = point + 10;
 				sum += point;
 				// sum 값이 증가함에 따라 게임속도(this.time 값)이 낮아짐 (속도가 빨라짐)
-				System.out.println(nowlevel);
+				// 단계별 점수 및 단계 표시 문자 색상 변경
 
-				if (sum >= 70 || nowlevel.equals("2단계") || nowlevel.equals("3단계") || nowlevel.equals("4단계")
-						|| nowlevel.equals("5단계") || nowlevel.equals("6단계") || nowlevel.equals("7단계")
-						|| nowlevel.equals("8단계")) {
+				if (sum >= 70) {
 					this.time = 270; // 2단계
-					level = 2;
-					if (sum >= 140 || nowlevel.equals("3단계") || nowlevel.equals("4단계") || nowlevel.equals("5단계")
-							|| nowlevel.equals("6단계") || nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+					level = "2단계";
+					if (sum >= 140) {
 						this.time = 240; // 3단계
-						level = 3;
-						if (sum >= 210 || nowlevel.equals("4단계") || nowlevel.equals("5단계") || nowlevel.equals("6단계")
-								|| nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+						level = "3단계";
+						if (sum >= 210) {
 							this.time = 210; // 4단계
-							level = 4;
-							if (sum >= 280 || nowlevel.equals("5단계") || nowlevel.equals("6단계") || nowlevel.equals("7단계")
-									|| nowlevel.equals("8단계")) {
+							level = "4단계";
+							if (sum >= 280) {
 								this.time = 180; // 5단계
-								level = 5;
-								if (sum >= 350 || nowlevel.equals("6단계") || nowlevel.equals("7단계")
-										|| nowlevel.equals("8단계")) {
+								level = "5단계";
+								if (sum >= 350) {
 									this.time = 150; // 6단계
-									level = 6;
-									if (sum >= 420 || nowlevel.equals("7단계") || nowlevel.equals("8단계")) {
+									level = "6단계";
+									if (sum >= 420) {
 										this.time = 120; // 7단계
-										level = 7;
-										if (sum >= 490 || nowlevel.equals("8단계")) {
+										level = "7단계";
+										if (sum >= 490) {
 											this.time = 90; // 8단계
-											level = 8;
+											level = "8단계";
 										}
 									}
 								}
@@ -263,7 +285,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 			}
 
 			pointtext.setText(String.valueOf(sum + "점"));
-			leveltext.setText(String.valueOf(level + "단계"));
+			leveltext.setText(level);
 		}
 
 	}
@@ -429,6 +451,7 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 			System.out.println(se.getMessage());
 		}
 
+		JOptionPane.showMessageDialog(null, LoginView.id + "님  " + sum + "점  입니다 !!");
 		int confirm = JOptionPane.showConfirmDialog(null, "다시 하시겠습니까?", "GAME OVER", // 삭제 경고문 창
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
@@ -468,6 +491,14 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 
 	public static void main(String string) {
 		new Tetris("Tetris by JH");
-		System.out.println("LEVEL : " + DbLogIn.getNowlevel());
 	}
+
+	public static boolean isLine() {
+		return isLine;
+	}
+
+	public static void setLine(boolean isLine) {
+		Tetris.isLine = isLine;
+	}
+
 }
