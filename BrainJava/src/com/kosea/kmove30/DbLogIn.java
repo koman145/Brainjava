@@ -50,17 +50,18 @@ public class DbLogIn extends JFrame {
 
 		JLabel levelSelect = new JLabel("LEVEL");
 		JButton startBtn = new JButton("게임시작");
-		JButton selectBtn = new JButton("회원정보수정");
+		JButton selectBtn = new JButton("정보수정");
+		JButton logoutBtn = new JButton("로그아웃");
 
 		panel.add(levelSelect);
 		panel.add(levelCombox);
 		panel.add(startBtn);
 		panel.add(selectBtn);
+		panel.add(logoutBtn);
 
 		contentPane.add(panel, BorderLayout.SOUTH);
 
 		startBtn.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent arg0) {
 				int confirm = JOptionPane.showConfirmDialog(null, "시작하시겠습니까?", "시작", // 삭제 경고문 창
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -76,8 +77,6 @@ public class DbLogIn extends JFrame {
 		});
 
 		selectBtn.addActionListener(new ActionListener() {
-
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				int confirm = JOptionPane.showConfirmDialog(null, "정보를 수정하시겠습니까?", "정보수정", // 정보 수정 알림 창
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -90,6 +89,23 @@ public class DbLogIn extends JFrame {
 					frame.setVisible(false);
 					MemberProc memberproc = new MemberProc(id, mList);
 				}
+			}
+		});
+		
+		logoutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int confirm = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?", "로그아웃", // 로그아웃 알림창
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+				System.out.println("confirm : " + confirm);
+
+				if (confirm == 1) {// 아니오를 선택하면 종료
+					return;
+				} else {
+					frame.setVisible(false);
+					MainProcess.main(null);
+				}
+				
 			}
 		});
 

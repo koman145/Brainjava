@@ -210,7 +210,6 @@ public class CheckCodeNo extends JFrame {
 		btnReCount.setPreferredSize(new Dimension(87, 20));
 		btnReCount.setFont(new Font("굴림체", Font.BOLD, 12));
 		btnReCount.setForeground(Color.white);
-		;
 		btnReCount.setBorderPainted(false);
 		btnReCount.setBackground(new Color(255, 102, 0));
 		guideLine.add(btnReCount);

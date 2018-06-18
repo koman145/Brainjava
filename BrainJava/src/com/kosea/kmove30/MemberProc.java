@@ -1,12 +1,21 @@
 package com.kosea.kmove30;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
@@ -29,11 +38,12 @@ public class MemberProc extends JFrame implements ActionListener {
 	JTextField tfId, tfName;
 	JTextField tfTel1, tfTel2, tfTel3; // 전화
 	JComboBox tfYear, tfMonth, tfDate; // 생년월일
-	JPasswordField pfPwd; // 비밀번호
+	public static JPasswordField pfPwd, pfPwdCh; // 비밀번호
+
 	// JTextField ;// 생년월일
 	JRadioButton rbMan, rbWoman; // 남, 여
 	JTextArea taIntro;
-	JButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck; // 가입, 취소, 수정 , 탈퇴 버튼\
+	JButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck, btnIdCheck; // 가입, 취소, 수정 , 탈퇴 버튼\
 	public static String phoneNo = null;
 	int[] arrYear = new int[2018 - 1900];
 	int[] arrMonth = new int[12];
@@ -129,22 +139,106 @@ public class MemberProc extends JFrame implements ActionListener {
 
 		// 아이디
 		JLabel bId = new JLabel("아이디");
-		tfId = new JTextField(20);
+		tfId = new JTextField();
 		// 그리드백에 붙이기
 		gbAdd(bId, 0, 0, 1, 1);
-		gbAdd(tfId, 1, 0, 3, 1);
+		gbAdd(tfId, 1, 0, 1, 1);
+
+		JLabel bIdCh = new JLabel("아이디 중복확인을 해주세요.");
+		gbAdd(bIdCh, 1, 1, 1, 1);
+
+		// ID 중복확인 버튼
+		btnIdCheck = new JButton("중복확인");
+		gbAdd(btnIdCheck, 3, 0, 1, 1);
+		btnIdCheck.setPreferredSize(new Dimension(1, 1));
+		btnIdCheck.setFont(new Font("Times", Font.PLAIN, 11));
+		btnIdCheck.setForeground(Color.black);
+		btnIdCheck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tfId.getText().equals("")) {
+					bIdCh.setText("아이디를 입력해주세요");
+					bIdCh.setForeground(java.awt.Color.red);
+					btnInsert.setEnabled(false);
+				} else {
+					Connection conn = null;
+					Statement stmt = null;
+					ResultSet rs = null;
+					try {
+						System.out.println(tfId.getText());
+						Class.forName("com.mysql.jdbc.Driver");
+						conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql", "root", "12345");
+						System.out.println("데이터베이스에 접속했습니다.");
+
+						stmt = conn.createStatement();
+						rs = stmt.executeQuery("SELECT * FROM Tetrismember where id = '" + tfId.getText() + "'");
+						String rsString = String.valueOf(rs.next()); // 왜인지 모르겠지만 rs.next()는 boolean값인데 if문에서 true값으로
+																		// 인식되지 않는다.
+																		// 따라서 boolean값을 String으로 변경하여 조건문에서 비교에 사용하도록
+																		// 했다.
+						if (rsString.equals("true")) { // 입력한 ID가 tetrismember에 존재한다면 (true값이라면) 가입불가
+							System.out.println("true 실행");
+							bIdCh.setText("이미  사용중인 아이디입니다.");
+							bIdCh.setForeground(java.awt.Color.red);
+							btnInsert.setEnabled(false);
+						}
+
+						if (rsString.equals("false")) { // 입력한 ID가 tetrismember에 존재하지않는다면 (false값이라면) 가입가능
+							System.out.println("false 실행");
+							bIdCh.setText("사용할 수 있는 아이디입니다.");
+							bIdCh.setForeground(java.awt.Color.blue);
+							btnInsert.setEnabled(true);
+						}
+						conn.close();
+					} catch (ClassNotFoundException cnfe) {
+						System.out.println("해당 클래스를 찾을 수 없습니다." + cnfe.getMessage());
+					} catch (SQLException se) {
+						System.out.println(se.getMessage());
+					}
+				}
+			}
+		});
 
 		// 비밀번호
 		JLabel bPwd = new JLabel("비밀번호");
 		pfPwd = new JPasswordField(20);
-		gbAdd(bPwd, 0, 1, 1, 1);
-		gbAdd(pfPwd, 1, 1, 3, 1);
+		gbAdd(bPwd, 0, 2, 1, 1);
+		gbAdd(pfPwd, 1, 2, 3, 1);
+
+		// 비밀번호 확인
+		JLabel bPwdCh = new JLabel("비밀번호확인");
+		pfPwdCh = new JPasswordField(20);
+		gbAdd(bPwdCh, 0, 3, 1, 1);
+		gbAdd(pfPwdCh, 1, 3, 3, 1);
+
+		JLabel pwCheck = new JLabel("비밀번호를 입력해주세요.");
+		gbAdd(pwCheck, 1, 4, 2, 1);
+
+		pfPwdCh.addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+			}
+			public void keyReleased(KeyEvent e) {
+				System.out.println(pfPwd.getText());
+				System.out.println(pfPwdCh.getText());
+				if (pfPwd.getText().equals(pfPwdCh.getText())) { // 비밀번호와 비밀번호확인에 입력된 값이 같다면 가입가능
+					pwCheck.setText("비밀번호가 같습니다.");
+					pwCheck.setForeground(java.awt.Color.blue);
+					btnInsert.setEnabled(true);
+				}
+				if (!pfPwd.getText().equals(pfPwdCh.getText())) { // 비밀번호와 비밀번호확인에 입력된 값이 다르다면 가입불가
+					pwCheck.setText("비밀번호가 다릅니다.");
+					pwCheck.setForeground(java.awt.Color.red);
+					btnInsert.setEnabled(false);
+				}
+			}
+			public void keyPressed(KeyEvent e) {
+			}
+		});
 
 		// 이름
 		JLabel bName = new JLabel("이름");
 		tfName = new JTextField(20);
-		gbAdd(bName, 0, 2, 1, 1);
-		gbAdd(tfName, 1, 2, 3, 1);
+		gbAdd(bName, 0, 5, 1, 1);
+		gbAdd(tfName, 1, 5, 3, 1);
 
 		// 전화
 		JLabel bTel = new JLabel(" 전화 (인증완료)");
@@ -163,8 +257,8 @@ public class MemberProc extends JFrame implements ActionListener {
 		pTel.add(tfTel2);
 		pTel.add(new JLabel(" - "));
 		pTel.add(tfTel3);
-		gbAdd(bTel, 0, 3, 1, 1);
-		gbAdd(pTel, 1, 3, 3, 1);
+		gbAdd(bTel, 0, 6, 1, 1);
+		gbAdd(pTel, 1, 6, 3, 1);
 
 		// 생일
 		JLabel bBirth = new JLabel("생년월일");
@@ -190,8 +284,8 @@ public class MemberProc extends JFrame implements ActionListener {
 		pBirth.add(new JLabel("월"));
 		pBirth.add(tfDate);
 		pBirth.add(new JLabel("일"));
-		gbAdd(bBirth, 0, 6, 1, 1);
-		gbAdd(pBirth, 1, 6, 3, 1);
+		gbAdd(bBirth, 0, 7, 1, 1);
+		gbAdd(pBirth, 1, 7, 3, 1);
 
 		// 성별
 		JLabel bGender = new JLabel("성별");
@@ -231,7 +325,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		btnCancel.addActionListener(this);
 		btnDelete.addActionListener(this);
 
-		setSize(380, 450);
+		setSize(500, 600);
 		setBackground(new Color(255, 255, 255));
 		setVisible(true);
 		// setDefaultCloseOperation(EXIT_ON_CLOSE); //System.exit(0) //프로그램종료
@@ -276,7 +370,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		}
 
 		// jTable내용 갱신 메소드 호출
-//		mList.jTableRefresh();
+		// mList.jTableRefresh();
 
 	}// actionPerformed
 
