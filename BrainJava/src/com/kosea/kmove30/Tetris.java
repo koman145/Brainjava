@@ -46,8 +46,8 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 	public static String point = null;
 	static DbLogIn dblogin;
 	static String nowlevel = DbLogIn.getNowlevel();
-	JTextField pointtext = new JTextField(3);
-	JTextField leveltext = new JTextField(3);
+	JLabel pointtext = new JLabel();
+	JLabel leveltext = new JLabel();
 
 	// public static boolean isRight = false; //오른쪽여부
 	Thread t;
@@ -117,13 +117,13 @@ public class Tetris extends JFrame implements Runnable, KeyListener
 		this.pointscreen.add(new JLabel("점수"));
 		this.pointscreen.add(pointtext);
 		pointtext.setText("0점");
-		pointtext.setHorizontalAlignment(JTextField.CENTER);
-		pointtext.setEnabled(false);
+		pointtext.setForeground(java.awt.Color.ORANGE);
+//		pointtext.setEnabled(false);
 		this.pointscreen.add(new JLabel("레벨"));
 		this.pointscreen.add(leveltext);
 		leveltext.setText("1단계");
-		leveltext.setHorizontalAlignment(JTextField.CENTER);
-		leveltext.setEnabled(false);
+		leveltext.setForeground(java.awt.Color.ORANGE);
+//		leveltext.setEnabled(false);
 
 		// 상단 셋팅 끝======////////////////////////////////////////////////
 

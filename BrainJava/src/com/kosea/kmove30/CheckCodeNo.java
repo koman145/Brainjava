@@ -69,7 +69,7 @@ public class CheckCodeNo extends JFrame {
 
 	public void placeCheckPanel(JPanel panel) {
 
-		int i = CodeTimer.setI(10);
+		int i = CodeTimer.setI(180);
 
 		codeCheck = SendExample.getCode();
 		
