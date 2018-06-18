@@ -4,13 +4,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-public class CodeTimer {
+public class CodeTimer extends Thread {
 	public static String time1;
 	public static JLabel countLabel = new JLabel();
 
-	Timer timer = new Timer();
-	public static int i = 180;
+	public static Timer timer = new Timer();
+	public static int i;
 	TimerTask task = new TimerTask() {
 		public void run() {
 			time1 = getTime(i);
@@ -18,6 +19,12 @@ public class CodeTimer {
 			i--;
 			countLabel.setText(time1);
 			countLabel.setForeground(java.awt.Color.red); // 글자색 변경
+			if (i == -1) {
+				timer.cancel();
+				CheckCodeNo.codeCheck = null;
+				JOptionPane.showMessageDialog(null, "인증시간이 종료되었습니다.");
+				JOptionPane.showMessageDialog(null, "다시 시도해 주십시오.");
+			}
 		}
 	};
 
@@ -63,6 +70,14 @@ public class CodeTimer {
 
 		time1 = strMins + "분" + strSecs + "초";
 		return time1;
+	}
+
+	public static int getI() {
+		return i;
+	}
+
+	public static int setI(int i) {
+		return CodeTimer.i = i;
 	}
 
 	public static void main(String[] args) {

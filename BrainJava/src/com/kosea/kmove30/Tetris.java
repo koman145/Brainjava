@@ -2,7 +2,6 @@ package com.kosea.kmove30;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.TextField;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.Connection;

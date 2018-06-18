@@ -1,6 +1,7 @@
 package com.kosea.kmove30;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,24 +27,26 @@ public class CheckCodeNo extends JFrame {
 	// private static MainProcess main;
 	private JButton cancleLogin;
 	private JButton checkbtn;
-	private JButton btnRe;
+	private JButton btnRe, btnReCount;
 	private static JTextField CodeNoText;
 	// private static boolean bLoginCheck;
 	public static String id = null;
 	public static String pw = null;
-	public static String codeCheck = SendExample.getCode();
+	public static String codeCheck; // = SendExample.getCode();
 	public static String code;
 	public static CodeTimer codeTimer = new CodeTimer();
 	public static JLabel countLabel;
+	public static Thread t2;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static void main(String[] args) {
 		new CheckCodeNo();
-		CodeTimer.main(null); // 카운트 다운 시작
+		// 카운트 다운 시작
 	}
 
 	public CheckCodeNo() {
+		CodeTimer.main(null);
 
 		// setting
 		setTitle("휴대폰  인증");
@@ -66,6 +69,10 @@ public class CheckCodeNo extends JFrame {
 
 	public void placeCheckPanel(JPanel panel) {
 
+		int i = CodeTimer.setI(10);
+
+		codeCheck = SendExample.getCode();
+		
 		guideLine.setBorder(new TitledBorder(new LineBorder(Color.DARK_GRAY, 5)));
 		guideLine.setLocation(5, 205);
 		guideLine.setSize(360, 90);
@@ -180,8 +187,9 @@ public class CheckCodeNo extends JFrame {
 				}
 				if (confirm == 0) {// 예
 					dispose();
-					
-					SendExample.main(null);	//인증번호 재전송
+					codeCheck = SendExample.getCode();
+					CodeTimer.setI(180);
+					SendExample.main(null); // 인증번호 재전송
 					CheckCodeNo checkCodeNo = new CheckCodeNo();
 				}
 			}
@@ -191,14 +199,28 @@ public class CheckCodeNo extends JFrame {
 		countLabel1.setFont(new Font("굴림체", Font.BOLD, 12));
 		guideLine.add(countLabel1);
 
-		
-		countLabel = CodeTimer.countLabel;		//카운트다운 구현 03:00
+		countLabel = CodeTimer.countLabel; // 카운트다운 구현 03:00
 		guideLine.add(countLabel);
-		
+
 		JLabel countLabel2 = new JLabel(")");
 		countLabel2.setFont(new Font("굴림체", Font.BOLD, 12));
 		guideLine.add(countLabel2);
-		
+
+		btnReCount = new JButton("시간연장");
+		btnReCount.setPreferredSize(new Dimension(87, 20));
+		btnReCount.setFont(new Font("굴림체", Font.BOLD, 12));
+		btnReCount.setForeground(Color.white);
+		;
+		btnReCount.setBorderPainted(false);
+		btnReCount.setBackground(new Color(255, 102, 0));
+		guideLine.add(btnReCount);
+		btnReCount.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CodeTimer.setI(180);
+			}
+		});
 
 		JLabel Label1 = new JLabel("※ 승인번호가 도착하지 않은 경우");
 		Label1.setForeground(java.awt.Color.black); // 글자색 변경
@@ -233,8 +255,10 @@ public class CheckCodeNo extends JFrame {
 				System.out.println("코드체크 : " + codeCheck);
 				if (code.equals(codeCheck)) {
 					JOptionPane.showMessageDialog(null, "인증되었습니다.");
+					CodeTimer.timer.cancel();
 					dispose();
 					MemberProc memberProc = new MemberProc();
+					// CodeTimer.t.stop();
 				} else {
 					JOptionPane.showMessageDialog(null, "인증번호가 다릅니다.");
 					return;
