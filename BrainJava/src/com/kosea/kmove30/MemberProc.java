@@ -49,6 +49,7 @@ public class MemberProc extends JFrame implements ActionListener {
 	int[] arrMonth = new int[12];
 	int[] arrDate = new int[31];
 	public static int insertA, insertB;
+	public static JLabel bPwdCh, pwCheck, bIdCh;
 
 	GridBagLayout gb;
 	GridBagConstraints gbc;
@@ -79,6 +80,16 @@ public class MemberProc extends JFrame implements ActionListener {
 		createUI();
 		btnInsert.setEnabled(false);
 		btnInsert.setVisible(false);
+		btnIdCheck.setEnabled(false);
+		btnIdCheck.setVisible(false);
+		pfPwdCh.setEnabled(false);
+		pfPwdCh.setVisible(false);
+		bPwdCh.setVisible(false);
+		bPwdCh.setEnabled(false);
+		bIdCh.setVisible(false);
+		bIdCh.setEnabled(false);
+		setSize(500, 500);
+		pwCheck.setText("비밀번호를 꼭 입력해주세요.");
 		this.mList = mList;
 
 		System.out.println("id=" + id);
@@ -145,7 +156,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		gbAdd(bId, 0, 0, 1, 1);
 		gbAdd(tfId, 1, 0, 1, 1);
 
-		JLabel bIdCh = new JLabel("아이디 중복확인을 해주세요.");
+		bIdCh = new JLabel("아이디 중복확인을 해주세요.");
 		gbAdd(bIdCh, 1, 1, 1, 1);
 
 		// ID 중복확인 버튼
@@ -210,12 +221,12 @@ public class MemberProc extends JFrame implements ActionListener {
 		gbAdd(pfPwd, 1, 2, 3, 1);
 
 		// 비밀번호 확인
-		JLabel bPwdCh = new JLabel("비밀번호확인");
+		bPwdCh = new JLabel("비밀번호확인");
 		pfPwdCh = new JPasswordField(20);
 		gbAdd(bPwdCh, 0, 3, 1, 1);
 		gbAdd(pfPwdCh, 1, 3, 3, 1);
 
-		JLabel pwCheck = new JLabel("비밀번호를 입력해주세요.");
+		pwCheck = new JLabel("비밀번호를 입력해주세요.");
 		gbAdd(pwCheck, 1, 4, 2, 1);
 
 		pfPwdCh.addKeyListener(new KeyListener() {
