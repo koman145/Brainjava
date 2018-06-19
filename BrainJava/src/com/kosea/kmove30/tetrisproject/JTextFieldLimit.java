@@ -1,4 +1,4 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;

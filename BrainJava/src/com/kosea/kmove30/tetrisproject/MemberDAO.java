@@ -1,4 +1,4 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 //이름 규칙 : 테이블명DAO , 테이블명DTO
 //CRUD : Create;insert , Read;Select, Update, delete

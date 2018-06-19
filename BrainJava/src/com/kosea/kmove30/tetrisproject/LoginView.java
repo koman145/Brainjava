@@ -1,4 +1,4 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import com.kosea.kmove30.JDBC_Manager;
 
 public class LoginView extends JFrame {
 

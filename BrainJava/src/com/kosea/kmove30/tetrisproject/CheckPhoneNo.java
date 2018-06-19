@@ -1,4 +1,4 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import com.kosea.kmove30.JDBC_Manager;
 
 public class CheckPhoneNo extends JFrame {
 

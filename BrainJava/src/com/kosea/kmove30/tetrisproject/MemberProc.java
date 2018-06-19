@@ -1,4 +1,4 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 import java.awt.Color;
 import java.awt.Dimension;

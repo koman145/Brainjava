@@ -1,6 +1,8 @@
-package com.kosea.kmove30;
+package com.kosea.kmove30.tetrisproject;
 
 import javax.swing.JTable;
+
+import com.kosea.kmove30.JDBC_Manager;
 
 // 테트리스 서버  접속을 위한 로그인 창 실행
 public class MainProcess {
