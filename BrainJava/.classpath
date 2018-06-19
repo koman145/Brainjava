@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="D:/K-Move/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar"/>
+	<classpathentry kind="lib" path="D:/K-Move/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/K-Move/mail.jar"/>
+	<classpathentry kind="lib" path="D:/K-Move/mybatis-3.2.3.jar"/>
+	<classpathentry kind="lib" path="D:/K-Move/SwingSet2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
