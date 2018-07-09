@@ -43,7 +43,7 @@ public class MemberProc extends JFrame implements ActionListener {
 	// JTextField ;// 생년월일
 	JRadioButton rbMan, rbWoman; // 남, 여
 	JTextArea taIntro;
-	JButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck, btnIdCheck; // 가입, 취소, 수정 , 탈퇴 버튼\
+	RoundedButton btnInsert, btnCancel, btnUpdate, btnDelete, btnCheck, btnIdCheck; // 가입, 취소, 수정 , 탈퇴 버튼\
 	public static String phoneNo = null;
 	int[] arrYear = new int[2018 - 1900];
 	int[] arrMonth = new int[12];
@@ -142,6 +142,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		System.out.println("실행");
 
 		this.setTitle("회원정보");
+
 		gb = new GridBagLayout();
 		setLayout(gb);
 		gbc = new GridBagConstraints();
@@ -160,7 +161,8 @@ public class MemberProc extends JFrame implements ActionListener {
 		gbAdd(bIdCh, 1, 1, 1, 1);
 
 		// ID 중복확인 버튼
-		btnIdCheck = new JButton("중복확인");
+		btnIdCheck = new RoundedButton("중복확인");
+		btnIdCheck.setBackground(new Color(153, 204, 204));
 		gbAdd(btnIdCheck, 3, 0, 1, 1);
 		btnIdCheck.setPreferredSize(new Dimension(1, 1));
 		btnIdCheck.setFont(new Font("Times", Font.PLAIN, 11));
@@ -331,10 +333,18 @@ public class MemberProc extends JFrame implements ActionListener {
 
 		// 버튼
 		JPanel pButton = new JPanel();
-		btnInsert = new JButton("가입");
-		btnUpdate = new JButton("수정");
-		btnDelete = new JButton("탈퇴");
-		btnCancel = new JButton("취소");
+		btnInsert = new RoundedButton("가입");
+		btnInsert.setBackground(new Color(153, 204, 204));
+		btnInsert.setForeground(Color.black);
+		btnUpdate = new RoundedButton("수정");
+		btnUpdate.setBackground(new Color(153, 204, 204));
+		btnUpdate.setForeground(Color.black);
+		btnDelete = new RoundedButton("탈퇴");
+		btnDelete.setBackground(new Color(153, 204, 204));
+		btnDelete.setForeground(Color.black);
+		btnCancel = new RoundedButton("취소");
+		btnCancel.setBackground(new Color(153, 204, 204));
+		btnCancel.setForeground(Color.black);
 		pButton.add(btnInsert);
 		btnInsert.setEnabled(false);
 		pButton.add(btnUpdate);
@@ -355,6 +365,7 @@ public class MemberProc extends JFrame implements ActionListener {
 
 	}// createUI
 
+	
 	// 그리드백레이아웃에 붙이는 메소드
 	private void gbAdd(JComponent c, int x, int y, int w, int h) {
 		gbc.gridx = x;

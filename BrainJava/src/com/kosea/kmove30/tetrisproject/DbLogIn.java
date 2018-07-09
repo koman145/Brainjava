@@ -1,6 +1,7 @@
 package com.kosea.kmove30.tetrisproject;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,13 +45,23 @@ public class DbLogIn extends JFrame {
 		};
 
 		JTable table = new JTable(model);
+		table.setBackground(Color.GRAY);
+		table.setForeground(Color.WHITE);
 		contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
 		JPanel panel = new JPanel();
+		panel.setBackground(Color.GRAY);
 
 		JLabel levelSelect = new JLabel("LEVEL");
-		JButton startBtn = new JButton("게임시작");
-		JButton selectBtn = new JButton("정보수정");
-		JButton logoutBtn = new JButton("로그아웃");
+		levelSelect.setForeground(Color.WHITE);
+		RoundedButton startBtn = new RoundedButton("게임시작");
+		startBtn.setBackground(Color.WHITE);
+		startBtn.setForeground(Color.black);
+		RoundedButton selectBtn = new RoundedButton("정보수정");
+		selectBtn.setBackground(Color.WHITE);
+		selectBtn.setForeground(Color.black);
+		RoundedButton logoutBtn = new RoundedButton("로그아웃");
+		logoutBtn.setBackground(Color.WHITE);
+		logoutBtn.setForeground(Color.black);
 
 		panel.add(levelSelect);
 		panel.add(levelCombox);

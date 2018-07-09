@@ -1,5 +1,6 @@
 package com.kosea.kmove30.tetrisproject;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -32,7 +33,8 @@ public class LoginView extends JFrame {
 	private static boolean bLoginCheck;
 	public static String id = null;
 	public static String pw = null;
-
+	RoundedButton Button;
+	
 	public static void main(String[] args) {
 
 		// new LoginView();
@@ -56,16 +58,21 @@ public class LoginView extends JFrame {
 		// visiible
 		setVisible(true);
 	}
+	
+	
 
 	public void placeLoginPanel(JPanel panel) {
 
 		// 프레임 짜기
 		panel.setLayout(null);
+		panel.setBackground(Color.gray);
 		JLabel userLabel = new JLabel("아이디");
+		userLabel.setForeground(Color.white);
 		userLabel.setBounds(10, 10, 80, 25);
 		panel.add(userLabel);
 
 		JLabel passLabel = new JLabel("비밀번호");
+		passLabel.setForeground(Color.white);
 		passLabel.setBounds(10, 40, 80, 25);
 		panel.add(passLabel);
 
@@ -84,8 +91,10 @@ public class LoginView extends JFrame {
 		});
 
 		// 회원가입 버튼을 누르면 회원 아이디, 비밀번호를 추가하는 테이블 실행
-		btnInit = new JButton("회원가입");
-		btnInit.setBounds(10, 80, 100, 25);
+		RoundedButton btnInit = new RoundedButton("회원가입");
+		btnInit.setBackground(Color.white);
+		btnInit.setForeground(Color.black);
+		btnInit.setBounds(20, 80, 100, 25);
 		panel.add(btnInit);
 		btnInit.addActionListener(new ActionListener() {
 			@Override
@@ -97,12 +106,15 @@ public class LoginView extends JFrame {
 		});
 
 		// 로그인 버튼 누르면 아이디와 패스워드 비교 시작
-		btnLogin = new JButton("로그인");
-		btnLogin.setBounds(160, 80, 100, 25);
+		RoundedButton btnLogin = new RoundedButton("로그인");
+		btnLogin.setBackground(Color.white);
+		btnLogin.setForeground(Color.black);
+		btnLogin.setBounds(150, 80, 100, 25);
 		panel.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				btnLogin.setSelected(!btnLogin.isSelected());
 				isLoginCheck();
 			}
 		});

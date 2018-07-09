@@ -25,8 +25,8 @@ public class CheckPhoneNo extends JFrame {
 	JTable table;
 	AddLogIn addLogin;
 	// private static MainProcess main;
-	private JButton btnLogin;
-	private JButton btnInit;
+	private RoundedButton btnLogin;
+	private RoundedButton btnInit;
 	private static JTextField phoneNoText1, phoneNoText2, phoneNoText3;
 	// private static boolean bLoginCheck;
 	public static String id = null;
@@ -157,7 +157,8 @@ public class CheckPhoneNo extends JFrame {
 		panel.add(Label4);
 
 		// 회원가입 버튼을 누르면 회원 아이디, 비밀번호를 추가하는 테이블 실행
-		btnInit = new JButton("확인");
+		btnInit = new RoundedButton("확인");
+		btnInit.setBackground(Color.LIGHT_GRAY);
 		btnInit.setBounds(80, 420, 80, 25);
 		panel.add(btnInit);
 		btnInit.addActionListener(new ActionListener() {
@@ -186,7 +187,8 @@ public class CheckPhoneNo extends JFrame {
 		});
 
 		// 로그인 버튼 누르면 아이디와 패스워드 비교 시작
-		btnLogin = new JButton("닫기");
+		btnLogin = new RoundedButton("닫기");
+		btnLogin.setBackground(Color.LIGHT_GRAY);
 		btnLogin.setBounds(190, 420, 80, 25);
 		panel.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {

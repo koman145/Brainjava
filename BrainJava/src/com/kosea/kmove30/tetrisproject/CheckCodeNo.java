@@ -27,9 +27,9 @@ public class CheckCodeNo extends JFrame {
 	JTable table;
 	AddLogIn addLogin;
 	// private static MainProcess main;
-	private JButton cancleLogin;
-	private JButton checkbtn;
-	private JButton btnRe, btnReCount;
+	private RoundedButton cancleLogin;
+	private RoundedButton checkbtn;
+	private RoundedButton btnRe, btnReCount;
 	private static JTextField CodeNoText;
 	// private static boolean bLoginCheck;
 	public static String id = null;
@@ -173,7 +173,9 @@ public class CheckCodeNo extends JFrame {
 		guideLine.add(CodeNoText);
 		// CodeNoText.getText().toString();
 
-		btnRe = new JButton("재전송");
+		btnRe = new RoundedButton("재전송");
+		btnRe.setBackground(Color.LIGHT_GRAY);
+		btnRe.setForeground(Color.black);
 		btnRe.setBounds(80, 420, 80, 25);
 		guideLine.add(btnRe);
 		btnRe.addActionListener(new ActionListener() {
@@ -208,7 +210,8 @@ public class CheckCodeNo extends JFrame {
 		countLabel2.setFont(new Font("굴림체", Font.BOLD, 12));
 		guideLine.add(countLabel2);
 
-		btnReCount = new JButton("시간연장");
+		btnReCount = new RoundedButton("시간연장");
+		btnReCount.setBackground(Color.magenta);
 		btnReCount.setPreferredSize(new Dimension(87, 20));
 		btnReCount.setFont(new Font("굴림체", Font.BOLD, 12));
 		btnReCount.setForeground(Color.white);
@@ -244,7 +247,8 @@ public class CheckCodeNo extends JFrame {
 		panel.add(Label4);
 
 		// 회원가입 버튼을 누르면 회원 아이디, 비밀번호를 추가하는 테이블 실행
-		checkbtn = new JButton("확인");
+		checkbtn = new RoundedButton("확인");
+		checkbtn.setBackground(Color.LIGHT_GRAY);
 		checkbtn.setBounds(90, 420, 80, 25);
 		panel.add(checkbtn);
 		checkbtn.addActionListener(new ActionListener() {
@@ -268,7 +272,8 @@ public class CheckCodeNo extends JFrame {
 		});
 
 		// 로그인 버튼 누르면 아이디와 패스워드 비교 시작
-		cancleLogin = new JButton("닫기");
+		cancleLogin = new RoundedButton("닫기");
+		cancleLogin.setBackground(Color.LIGHT_GRAY);
 		cancleLogin.setBounds(190, 420, 80, 25);
 		panel.add(cancleLogin);
 		cancleLogin.addActionListener(new ActionListener() {
