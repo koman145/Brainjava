@@ -65,14 +65,14 @@ public class LoginView extends JFrame {
 
 		// 프레임 짜기
 		panel.setLayout(null);
-		panel.setBackground(Color.gray);
+		panel.setBackground(Color.darkGray);
 		JLabel userLabel = new JLabel("아이디");
-		userLabel.setForeground(Color.white);
+		userLabel.setForeground(Color.lightGray);
 		userLabel.setBounds(10, 10, 80, 25);
 		panel.add(userLabel);
 
 		JLabel passLabel = new JLabel("비밀번호");
-		passLabel.setForeground(Color.white);
+		passLabel.setForeground(Color.lightGray);
 		passLabel.setBounds(10, 40, 80, 25);
 		panel.add(passLabel);
 

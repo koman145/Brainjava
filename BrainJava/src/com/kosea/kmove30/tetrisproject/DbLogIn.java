@@ -45,14 +45,14 @@ public class DbLogIn extends JFrame {
 		};
 
 		JTable table = new JTable(model);
-		table.setBackground(Color.GRAY);
+		table.setBackground(Color.darkGray);
 		table.setForeground(Color.WHITE);
 		contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.darkGray);
 
 		JLabel levelSelect = new JLabel("LEVEL");
-		levelSelect.setForeground(Color.WHITE);
+		levelSelect.setForeground(Color.lightGray);
 		RoundedButton startBtn = new RoundedButton("게임시작");
 		startBtn.setBackground(Color.WHITE);
 		startBtn.setForeground(Color.black);

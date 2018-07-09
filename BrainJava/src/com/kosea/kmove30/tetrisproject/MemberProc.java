@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,9 +16,7 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,11 +29,13 @@ import javax.swing.JTextField;
 
 public class MemberProc extends JFrame implements ActionListener {
 
-	JPanel p;
+	JPanel p, pTel, pBirth, pGender, pButton;
 	JTextField tfId, tfName;
 	JTextField tfTel1, tfTel2, tfTel3; // 전화
 	JComboBox tfYear, tfMonth, tfDate; // 생년월일
 	public static JPasswordField pfPwd, pfPwdCh; // 비밀번호
+	JLabel bId, bPwd, bName, bTel, bBirth, bGender, bIntro;
+	JScrollPane pane;
 
 	// JTextField ;// 생년월일
 	JRadioButton rbMan, rbWoman; // 남, 여
@@ -51,8 +48,6 @@ public class MemberProc extends JFrame implements ActionListener {
 	public static int insertA, insertB;
 	public static JLabel bPwdCh, pwCheck, bIdCh;
 
-	GridBagLayout gb;
-	GridBagConstraints gbc;
 	Member_List mList;
 
 	public MemberProc() { // 가입용 생성자
@@ -88,11 +83,24 @@ public class MemberProc extends JFrame implements ActionListener {
 		bPwdCh.setEnabled(false);
 		bIdCh.setVisible(false);
 		bIdCh.setEnabled(false);
-		setSize(500, 500);
+		setSize(500, 530);
+		tfId.setBounds(100, 25, 350, 30);
+		bPwd.setBounds(10, 70, 100, 30);
+		pfPwd.setBounds(100, 70, 350, 30);
 		pwCheck.setText("비밀번호를 꼭 입력해주세요.");
+		pwCheck.setBounds(100, 100, 350, 30);
+		bName.setBounds(10, 150, 200, 30);
+		tfName.setBounds(100, 150, 350, 30);
+		bTel.setBounds(10, 190, 200, 30);
+		pTel.setBounds(120, 190, 350, 30);
+		bBirth.setBounds(10, 230, 200, 30);
+		pBirth.setBounds(100, 230, 350, 30);
+		bGender.setBounds(10, 270, 200, 30);
+		pGender.setBounds(100, 270, 350, 30);
+		bIntro.setBounds(10, 310, 200, 30);
+		pane.setBounds(100, 310, 350, 120);
+		pButton.setBounds(70, 450, 350, 30);
 		this.mList = mList;
-
-		System.out.println("id=" + id);
 
 		MemberDAO dao = new MemberDAO();
 		MemberDTO vMem = dao.getMemberDTO(id);
@@ -139,31 +147,47 @@ public class MemberProc extends JFrame implements ActionListener {
 	}// viewData
 
 	private void createUI() {
-		System.out.println("실행");
 
-		this.setTitle("회원정보");
+		// setting
+		setTitle("회원가입");
+		setSize(500, 600);
+		setResizable(false);
+		setLocation(700, 300);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		gb = new GridBagLayout();
-		setLayout(gb);
-		gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
+		// panel
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.darkGray);
+		placeCheckPanel(panel);
 
-		// 아이디
-		JLabel bId = new JLabel("아이디");
+		// add
+		add(panel);
+
+		// visiible
+		setVisible(true);
+
+	}// createUI
+
+	public void placeCheckPanel(JPanel panel) {
+
+		panel.setLayout(null);
+		bId = new JLabel("아이디");
+		bId.setForeground(Color.WHITE);
+		bId.setBounds(10, 10, 100, 60);
+		panel.add(bId);
 		tfId = new JTextField();
-		// 그리드백에 붙이기
-		gbAdd(bId, 0, 0, 1, 1);
-		gbAdd(tfId, 1, 0, 1, 1);
-
+		tfId.setBounds(100, 25, 250, 30);
+		panel.add(tfId);
 		bIdCh = new JLabel("아이디 중복확인을 해주세요.");
-		gbAdd(bIdCh, 1, 1, 1, 1);
+		bIdCh.setBounds(100, 55, 200, 30);
+		bIdCh.setForeground(Color.LIGHT_GRAY);
+		panel.add(bIdCh);
 
 		// ID 중복확인 버튼
 		btnIdCheck = new RoundedButton("중복확인");
-		btnIdCheck.setBackground(new Color(153, 204, 204));
-		gbAdd(btnIdCheck, 3, 0, 1, 1);
+		btnIdCheck.setBackground(Color.WHITE);
+		btnIdCheck.setBounds(380, 25, 100, 30);
+		panel.add(btnIdCheck);
 		btnIdCheck.setPreferredSize(new Dimension(1, 1));
 		btnIdCheck.setFont(new Font("Times", Font.PLAIN, 11));
 		btnIdCheck.setForeground(Color.black);
@@ -171,7 +195,7 @@ public class MemberProc extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (tfId.getText().equals("")) {
 					bIdCh.setText("아이디를 입력해주세요");
-					bIdCh.setForeground(java.awt.Color.red);
+					bIdCh.setForeground(Color.red);
 					btnInsert.setEnabled(false);
 				} else {
 					Connection conn = null;
@@ -217,27 +241,33 @@ public class MemberProc extends JFrame implements ActionListener {
 		});
 
 		// 비밀번호
-		JLabel bPwd = new JLabel("비밀번호");
+		bPwd = new JLabel("비밀번호");
+		bPwd.setForeground(Color.WHITE);
+		bPwd.setBounds(10, 100, 100, 30);
+		panel.add(bPwd);
 		pfPwd = new JPasswordField(20);
-		gbAdd(bPwd, 0, 2, 1, 1);
-		gbAdd(pfPwd, 1, 2, 3, 1);
+		pfPwd.setBounds(100, 100, 350, 30);
+		panel.add(pfPwd);
 
 		// 비밀번호 확인
 		bPwdCh = new JLabel("비밀번호확인");
+		bPwdCh.setForeground(Color.WHITE);
+		bPwdCh.setBounds(10, 140, 100, 30);
+		panel.add(bPwdCh);
 		pfPwdCh = new JPasswordField(20);
-		gbAdd(bPwdCh, 0, 3, 1, 1);
-		gbAdd(pfPwdCh, 1, 3, 3, 1);
+		pfPwdCh.setBounds(100, 140, 350, 30);
+		panel.add(pfPwdCh);
 
 		pwCheck = new JLabel("비밀번호를 입력해주세요.");
-		gbAdd(pwCheck, 1, 4, 2, 1);
+		pwCheck.setBounds(100, 170, 350, 30);
+		pwCheck.setForeground(Color.LIGHT_GRAY);
+		panel.add(pwCheck);
 
 		pfPwdCh.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 			}
 
 			public void keyReleased(KeyEvent e) {
-				System.out.println(pfPwd.getText());
-				System.out.println(pfPwdCh.getText());
 				if (pfPwd.getText().equals(pfPwdCh.getText())) { // 비밀번호와 비밀번호확인에 입력된 값이 같다면 가입가능
 					pwCheck.setText("비밀번호가 같습니다.");
 					pwCheck.setForeground(java.awt.Color.blue);
@@ -259,14 +289,21 @@ public class MemberProc extends JFrame implements ActionListener {
 		});
 
 		// 이름
-		JLabel bName = new JLabel("이름");
+		bName = new JLabel("이름");
+		bName.setForeground(Color.WHITE);
+		bName.setBounds(10, 220, 100, 30);
+		panel.add(bName);
 		tfName = new JTextField(20);
-		gbAdd(bName, 0, 5, 1, 1);
-		gbAdd(tfName, 1, 5, 3, 1);
+		tfName.setBounds(100, 220, 350, 30);
+		panel.add(tfName);
 
 		// 전화
-		JLabel bTel = new JLabel(" 전화 (인증완료)");
-		JPanel pTel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		bTel = new JLabel(" 전화 (인증완료)");
+		bTel.setForeground(Color.WHITE);
+		bTel.setBounds(10, 260, 100, 30);
+		panel.add(bTel);
+		pTel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pTel.setBackground(Color.darkGray);
 		tfTel1 = new JTextField(6);
 		tfTel1.setText(CheckPhoneNo.getpNo1());
 		tfTel1.setEnabled(false);
@@ -281,11 +318,14 @@ public class MemberProc extends JFrame implements ActionListener {
 		pTel.add(tfTel2);
 		pTel.add(new JLabel(" - "));
 		pTel.add(tfTel3);
-		gbAdd(bTel, 0, 6, 1, 1);
-		gbAdd(pTel, 1, 6, 3, 1);
+		pTel.setBounds(120, 260, 350, 30);
+		panel.add(pTel);
 
 		// 생일
-		JLabel bBirth = new JLabel("생년월일");
+		bBirth = new JLabel("생년월일");
+		bBirth.setForeground(Color.WHITE);
+		bBirth.setBounds(10, 300, 100, 30);
+		panel.add(bBirth);
 		// 년도 설정
 		for (int i = 0; i <= 2017 - 1900; i++) {
 			arrYear[i] = 1900 + i;
@@ -301,56 +341,76 @@ public class MemberProc extends JFrame implements ActionListener {
 		tfYear = new JComboBox<>(arrYear);
 		tfMonth = new JComboBox<>(arrMonth);
 		tfDate = new JComboBox<>(arrDate);
-		JPanel pBirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBirth = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pBirth.setBackground(Color.darkGray);
+		JLabel year = new JLabel("년");
+		year.setForeground(Color.LIGHT_GRAY);
+		JLabel month = new JLabel("월");
+		month.setForeground(Color.LIGHT_GRAY);
+		JLabel date = new JLabel("일");
+		date.setForeground(Color.LIGHT_GRAY);
 		pBirth.add(tfYear);
-		pBirth.add(new JLabel("년"));
+		pBirth.add(year);
 		pBirth.add(tfMonth);
-		pBirth.add(new JLabel("월"));
+		pBirth.add(month);
 		pBirth.add(tfDate);
-		pBirth.add(new JLabel("일"));
-		gbAdd(bBirth, 0, 7, 1, 1);
-		gbAdd(pBirth, 1, 7, 3, 1);
+		pBirth.add(date);
+		pBirth.setBounds(100, 300, 350, 30);
+		panel.add(pBirth);
 
 		// 성별
-		JLabel bGender = new JLabel("성별");
-		JPanel pGender = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		bGender = new JLabel("성별");
+		bGender.setForeground(Color.WHITE);
+		bGender.setBounds(10, 340, 100, 30);
+		panel.add(bGender);
+		pGender = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		pGender.setBackground(Color.darkGray);
 		rbMan = new JRadioButton("남", true);
+		rbMan.setForeground(Color.LIGHT_GRAY);
+		rbMan.setBackground(Color.darkGray);
 		rbWoman = new JRadioButton("여", true);
+		rbWoman.setForeground(Color.LIGHT_GRAY);
+		rbWoman.setBackground(Color.darkGray);
 		ButtonGroup group = new ButtonGroup();
 		group.add(rbMan);
 		group.add(rbWoman);
 		pGender.add(rbMan);
 		pGender.add(rbWoman);
-		gbAdd(bGender, 0, 8, 1, 1);
-		gbAdd(pGender, 1, 8, 3, 1);
+		pGender.setBounds(100, 340, 350, 30);
+		panel.add(pGender);
 
 		// 자기소개
-		JLabel bIntro = new JLabel("자기 소개");
+		bIntro = new JLabel("자기 소개");
+		bIntro.setForeground(Color.WHITE);
+		bIntro.setBounds(10, 380, 100, 30);
+		panel.add(bIntro);
 		taIntro = new JTextArea(5, 20); // 행 : 열
-		JScrollPane pane = new JScrollPane(taIntro);
-		gbAdd(bIntro, 0, 10, 1, 1);
-		gbAdd(pane, 1, 10, 3, 1);
+		pane = new JScrollPane(taIntro);
+		pane.setBounds(100, 380, 350, 120);
+		panel.add(pane);
 
 		// 버튼
-		JPanel pButton = new JPanel();
+		pButton = new JPanel();
+		pButton.setBackground(Color.darkGray);
 		btnInsert = new RoundedButton("가입");
-		btnInsert.setBackground(new Color(153, 204, 204));
-		btnInsert.setForeground(Color.black);
+		btnInsert.setBackground(Color.white);
+		btnInsert.setForeground(Color.darkGray);
 		btnUpdate = new RoundedButton("수정");
-		btnUpdate.setBackground(new Color(153, 204, 204));
-		btnUpdate.setForeground(Color.black);
+		btnUpdate.setBackground(Color.white);
+		btnUpdate.setForeground(Color.darkGray);
 		btnDelete = new RoundedButton("탈퇴");
-		btnDelete.setBackground(new Color(153, 204, 204));
-		btnDelete.setForeground(Color.black);
+		btnDelete.setBackground(Color.white);
+		btnDelete.setForeground(Color.darkGray);
 		btnCancel = new RoundedButton("취소");
-		btnCancel.setBackground(new Color(153, 204, 204));
-		btnCancel.setForeground(Color.black);
+		btnCancel.setBackground(Color.white);
+		btnCancel.setForeground(Color.darkGray);
 		pButton.add(btnInsert);
 		btnInsert.setEnabled(false);
 		pButton.add(btnUpdate);
 		pButton.add(btnDelete);
 		pButton.add(btnCancel);
-		gbAdd(pButton, 0, 11, 4, 1);
+		pButton.setBounds(70, 520, 350, 30);
+		panel.add(pButton);
 
 		// 버튼에 감지기를 붙이자
 		btnInsert.addActionListener(this);
@@ -358,24 +418,7 @@ public class MemberProc extends JFrame implements ActionListener {
 		btnCancel.addActionListener(this);
 		btnDelete.addActionListener(this);
 
-		setSize(500, 600);
-		setBackground(new Color(255, 255, 255));
-		setVisible(true);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-	}// createUI
-
-	
-	// 그리드백레이아웃에 붙이는 메소드
-	private void gbAdd(JComponent c, int x, int y, int w, int h) {
-		gbc.gridx = x;
-		gbc.gridy = y;
-		gbc.gridwidth = w;
-		gbc.gridheight = h;
-		gb.setConstraints(c, gbc);
-		gbc.insets = new Insets(2, 2, 2, 2);
-		add(c, gbc);
-	}// gbAdd
+	}
 
 	public static void main(String[] args) {
 		new MemberProc();
@@ -385,7 +428,6 @@ public class MemberProc extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == btnInsert) {
 			insertMember();
-			System.out.println("insertMember() 호출 종료");
 		} else if (ae.getSource() == btnCancel) {
 			this.dispose(); // 창닫기 (현재창만 닫힘)
 			// system.exit(0)=> 내가 띄운 모든 창이 다 닫힘
@@ -515,10 +557,6 @@ public class MemberProc extends JFrame implements ActionListener {
 
 		String intro = taIntro.getText();
 		phoneNo = tel1 + tel2 + tel3;
-
-		System.out.println(tel);
-		System.out.println(birth);
-		System.out.println(phoneNo);
 
 		// dto에 담는다.
 		dto.setId(id);
